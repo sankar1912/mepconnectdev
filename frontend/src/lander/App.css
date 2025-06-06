@@ -1,0 +1,17 @@
+.Slider
+{
+  position: relative;
+  top: 1250px;
+}
+.Footer
+{
+  position: relative;
+  top: 1800px;
+  background-color: grey;
+}
+
+.navbar
+{
+  position: absolute;
+  left: 580px;
+}

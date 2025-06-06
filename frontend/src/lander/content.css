@@ -1,0 +1,591 @@
+@import url('https://fonts.googleapis.com/css2?family=Love+Light&family=Outfit:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Love+Light&family=Mohave:ital,wght@0,300..700;1,300..700&family=Outfit:wght@100..900&display=swap');
+* {
+  font-family: 'outfit', sans-serif;
+  background-color:white;
+  color:black;
+}
+.whit1
+{
+  position: absolute;
+  top: 120%;
+  left: 10%;
+  font-family: outfit;
+  font-size: 4.55rem;
+  color:black;
+}
+.whit1 span
+{
+  font-size: 2rem;
+  letter-spacing: 10px;
+}
+.video1 {
+    position: absolute;
+    top: 350px;
+    left: 10%;
+    border-radius: 15px;
+    height: 90%;
+    width: 80%;
+    object-fit: cover; 
+    transition: width 0.5s, height 0.5s, left 0.5s;
+}
+
+.menu
+{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    height: 30px;
+    width: 30px;
+}
+
+.hello{
+    position: absolute;
+    top:30px;
+    left: 500px;
+    font-family: "Outfit";
+    font-size: 3.5rem;
+    color:black;
+}
+
+.blur{
+    position: fixed;
+    inset: 0px;
+    height: 100%;
+    width: 100%;
+    background-color: transparent;   
+    -webkit-backdrop-filter: blur(80000px);
+
+}
+.body , html{
+    position: relative;
+    scrollbar-width: none;
+    overflow-x: hidden;
+  }
+
+/* .bar{
+    position: fixed;
+    left: 10px;
+    top: 10px;
+    height: 100%;
+    width: 15%;
+    background-color: grey;
+    
+    
+} */
+ .logo
+ {
+    position: absolute;
+    top: 120px;
+    left: 400px;
+    border-radius: 360px;
+    height: 60px;
+    width: 60px;
+ }
+
+ .principal
+ {
+    position: relative;
+    top: 1520px;
+    left: 180px;
+    height: 500px;
+    width: 500px;
+    object-fit: cover;
+ }
+.whit
+{
+  position: absolute;
+  top: 160%;
+  background-color:black;
+  width: 100%;
+  left: 50%;
+  height: 70%;
+}
+ .q
+ {
+    position: relative;
+    top: 1010px;
+    left: 750px;
+    width: 500px;
+    font-family: "outfit";
+    text-align: justify;
+    font-size: 1.2rem;
+    color: black;
+    background-color: transparent;
+ }
+ 
+ .grid {
+    position: absolute;
+    top: 2050px;
+    left: 2.5%;
+    height: 350px;
+    width: 1200px;
+    overflow: hidden;  /* Ensures only visible images show */
+}
+
+.gridc {
+    position: relative;
+    top: 1030px;
+    left: 25%;
+    width: 80%;
+    height: 1200px; /* Increased height */
+    overflow: scroll;
+    scrollbar-width: none;
+    display: flex;
+    gap: 15px;
+    transition: transform 0.8s ease-in-out;
+}
+
+.image-container img {
+    height: 100%; /* Ensures images fit the container */
+    width: max-content;  /* Maintain aspect ratio */
+    max-height: 500px; /* Increase image size */
+    background-color: pink;
+    transition: transform 0.5s ease-in-out;
+}
+
+.dept
+{
+    position: absolute;
+    top: 1620px;
+    left: 40px;
+    font-family:'outfit';
+    width: 100%;
+    font-size:35px;
+
+}
+p span
+{
+    letter-spacing: 12px;
+}
+.sp{
+    position: absolute;
+    top: 1750px;
+    left: 40px;
+    font-family:'outfit';
+    width: 20%;
+    font-size:35px;
+    color:white;
+    font-family: "mohave";
+    opacity: 0.7;
+}
+
+.login
+{
+    position: absolute;
+    top: 250px;
+    right: 50%;
+    border-radius: 360px;
+    height: 50px;
+    width: 150px;
+    background-color:black;
+    color: black;
+}
+
+.connect
+{
+    position: absolute;
+    top: 250px;
+    right: 37%;
+    border-radius: 360px;
+    height: 50px;
+    width: 150px;
+    color:black;
+    background-color:white;
+    border-color:black;
+}
+.not
+{
+    position: absolute;
+    top: 2550px;
+    left: 100px;
+    font-family: "outfit";
+    font-size: 50px;
+    color: black;
+}
+.grid-container {
+    position: absolute;
+    top: 2750px;
+    left: 50px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    max-width: 1200px;
+  }
+  
+  .grid-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .grid-item img {
+    width: 80%;
+    height: 80%;
+    max-width: 100%;
+    object-fit: cover; /* Ensure images cover the container equally */
+    margin: 0; /* Remove any default margin */
+    padding: 0; /* Remove any default padding */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+  }
+  
+  .grid-item p {
+    color: black;
+    text-align: center;
+  }
+  .cus
+        {
+            position: relative;
+            grid-column: span 2;
+            border-radius: 8px;
+            object-fit: cover;
+            background-position: center;
+            background-size: cover;
+            height: 50%;
+        }
+        .pro
+        {
+            position: absolute;
+            top: 73%;
+            left: 3%;
+            font-family: mohave;
+            font-size: 2rem;
+            color: black;
+            mix-blend-mode:difference;
+        }
+        .circle {
+            position: fixed;
+            width: 120px;
+            height: 120px;
+            background-color:white;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: background-color 0.5s ease, border-color 0.5s ease;
+        }
+
+
+        /* Default styles for larger screens (laptop and beyond) */
+.holder {
+    position: absolute;
+    top: 2500px;
+    left: 2%;
+    background-color:white;
+    height: 65%;
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    scrollbar-width: none;
+  }
+  /* Main container to hold images with scroll functionality */
+.holder1 {
+  position: absolute;
+  top: 3500px;
+  left: 0;
+  background-color:white;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  overflow-x: auto; /* Horizontal scrolling */
+  overflow-y: hidden; /* No vertical scrolling */
+  scrollbar-width: none; /* Hide scrollbar on modern browsers */
+}
+
+/* Inner container to hold images */
+.holder-inner {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+  transition: transform 0.3s ease; /* Smooth transition for sliding images */
+}
+
+/* Each image is wrapped in this container to overlay the description */
+.image-container {
+  position: relative;
+  height: 66%;
+}
+
+/* Styling for the images */
+.image {
+  width: 250px;
+  height: 205px;
+}
+
+/* Description box to be shown on hover */
+.description {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  font-size: 16px;
+}
+
+/* Show the description on hover */
+.image-container:hover .description {
+  opacity: 1;
+  color: black;
+  background-color: none;
+}
+
+  .holder-inner {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.3s ease; /* Smooth transition for sliding images */
+  }
+  .holder img {
+    height: 90%;
+    width: 100%;
+    object-fit: cover;
+  }
+  .holder1 img {
+    height: 90%;
+    width: 50%;
+    object-fit: cover;
+  }
+  .prev-button,
+.next-button {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color:black;
+  border: none;
+  font-size: 2rem;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+}
+.alu
+{
+    font-size: 7rem;
+    left: 2%;
+    z-index: 10;
+    color:black;
+    background-color: transparent;
+    position: absolute;
+    top: 3200px;
+}
+.prev-button {
+    top: 2050px;
+  left: 75%;
+  width:  62px;
+  border-radius: 360px;
+}
+
+.next-button {
+  
+  top: 2000px;
+  left: 75%;
+  width:  62px;
+  border-radius: 360px;
+}
+
+.prev-button:hover,
+.next-button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+   /* Darker on hover */
+}
+  
+  .holder img:hover {
+    width: 1050px; /* Increase the width of the image when hovered */
+  }
+  .back1
+  {
+    position: absolute;
+    background-color: transparent;
+    backdrop-filter: blur(5px);
+    z-index: 10;
+    opacity: 0.8;
+    height: 30%;
+    top: 60%;
+    width: 82.2%;
+    color: blacksmoke;
+    font-size: 10rem;
+  }
+  .blur1 {
+    position: absolute;
+    top: 2790px;
+    right: 1.5%;
+    backdrop-filter: blur(8080px); /* Apply blur effect to content behind */
+    background-color:black; /* Ensures no background color */
+    color:black; /* black text color for contrast */
+    height: 29%;
+    width: 30%;
+    border: none;
+    scrollbar-width: none;
+    border-radius: 8px;
+    padding: 20px; /* Optional: add padding for spacing */
+    overflow-y: auto; /* Optional: if the text overflows */
+  }
+  
+  .blur1 p, strong {
+    color: black;
+    text-align: justify;
+    font-size: 2.2vh;
+    background-color: transparent;
+  }
+  .kol
+  {
+    display: none;
+  }
+  .foot
+  {
+    position: absolute;
+    top: 3800px;
+    left: 55%;
+  }
+  .foot strong
+  {
+    position: relative;
+    top:-20px;
+    left: 10%;
+    color: black;
+    font-size: 2.5rem;
+  }
+  /* Media queries for smaller screens (mobile devices) */
+  @media (max-width: 768px) {
+    /* Make the holder look like an Instagram post */
+    .logo{
+        position: absolute;
+        left: 5%;
+        top: 9%;
+    }
+    .hello
+    {
+        position: absolute;
+        left: 5%;
+        top: 12%;
+        font-size: 65px;
+        color:black;
+    }
+    .hello span
+    {
+        position: absolute;
+        left: 0%;
+        top: 0px;
+        font-size: 45px;
+        color:black;
+    }
+    
+    .login{
+        /* position: absolute;
+        left: 4%;
+        top: 50%;
+        width: 45%; */
+        display: none;
+
+    }
+    .connect
+{
+    /* 
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 45%; */
+
+        display: none;
+    }
+    .whit
+    {
+      display: none;
+    }
+    .whit1
+    {
+      display: none;
+    }
+    .principal
+    {
+        position: absolute;
+        left: 0%;
+        top: 450%;
+        height: 100%;
+        width: 100%;
+    }
+    .q{
+        position: relative;
+        left: 5%;
+        top: 1450px;
+        font-size:1.5vh;
+        width: 90%;
+        color:black;
+    }
+    .video1
+    {
+        position: absolute;
+        height: 7020px;
+    }
+    .blur1{
+
+    }
+    .alu{
+        position: absolute;
+        top: 2500px;
+        font-size: 5rem;
+    }
+    /* .holder {
+        position: relative;
+        width: 100%;
+        top: 1650px;
+        height: 500px;
+    } */
+    
+    .holder {
+        position: absolute;
+        top: 1850px;
+        height: 350px;
+    }
+  
+    .holder-inner {
+        position: relative;
+     
+    }
+  
+    .holder img {
+        position: relative;
+      object-fit: cover;
+      height: auto;
+      width: auto;
+    }
+  
+    
+    .kol
+    {
+        position: relative;
+        top: 300px;
+        background-color:white;
+        height: 100%;
+        width: 100%;
+    }
+    .blur1 {
+        position: absolute;
+        top: 2250px;
+        left: 0%;
+        width: 85%;
+        height: 500px;
+        background-color:white;
+        
+    }
+  
+    .blur1 p, .blur1 strong {
+      font-size: 1.8vh;
+      color: black;
+    }
+  
+    .blur1 strong {
+      font-size: 2vh;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: black;
+    }
+  }
+  
