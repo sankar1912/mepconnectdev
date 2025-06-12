@@ -18,6 +18,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { searchresults, fetchSearchRequest } from "../../features/Search/searchPeopleSlice";
 import { getfriendslist, sendFriendequest } from "../../features/friends/friendsSlice";
 import { useNavigate } from "react-router-dom";
+import { getAuth } from "../../features/users/AuthSlice";
 
 const SearchResults = () => {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const SearchResults = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [note, setNote] = useState("");
-
+  const {auth} = useSelector(getAuth);
   const handleOpenModal = (user) => {
     setSelectedUser(user);
     setOpenModal(true);
@@ -45,7 +46,7 @@ const SearchResults = () => {
 
   // Filter users to exclude those already in the friendsList
   const filteredUsers = users.filter(user => 
-    !friendsList.some(friend => friend.email === user.email)
+    !friendsList.some(friend => friend.email === user.email) && !auth?.user?.email
   );
   const navigate=useNavigate();
 
@@ -141,7 +142,6 @@ const SearchResults = () => {
         ))}
       </Grid>
 
-      {/* Friend Request Modal */}
       <Dialog open={openModal} onClose={handleCloseModal} fullWidth maxWidth="xs">
         <DialogTitle textAlign="center" fontWeight="bold">Send Friend Request</DialogTitle>
         <DialogContent dividers>
