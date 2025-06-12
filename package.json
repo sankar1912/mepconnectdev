@@ -21,7 +21,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon ./backend/server.js",
-    "dev": "node ./backend/server.js"
+    "dev": "node ./backend/server.js",
+    "prod":"node ./backend/server.js"
   },
   "author": "sankar",
   "license": "ISC",
