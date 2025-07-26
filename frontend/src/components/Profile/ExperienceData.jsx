@@ -1,153 +1,120 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import {
+  Box, Typography, Paper, IconButton, TextField, Divider, Tooltip
+} from '@mui/material';
 import { motion } from 'framer-motion';
-import { Paper,Typography,IconButton,Box,TextField, Button } from '@mui/material';
-import { AddCircleOutline, Edit, Work } from '@mui/icons-material';
-function ExperienceData({user}) {
+import { Edit, Save, Work } from '@mui/icons-material';
 
-     
-      const [isEditingExperience, setIsEditingExperience] = useState(false);
-      const [experienceData, setExperienceData] = useState({
-        title: user.experience?.[0]?.title || "",
-        company: user.experience?.[0]?.company || "",
-        employmentType: user.experience?.[0]?.employmentType || "",
-        startDate: user.experience?.[0]?.startDate || "",
-        endDate: user.experience?.[0]?.endDate || "",
-        location: user.experience?.[0]?.location || "",
-        description: user.experience?.[0]?.description || "",
-      });
-     
+function ExperienceData({ user }) {
+  const [experienceList, setExperienceList] = useState(user?.experience || []);
+  const [editIndex, setEditIndex] = useState(null); // which experience block is in edit mode
+
+  const handleChange = (index, field, value) => {
+    const updated = [...experienceList];
+    updated[index][field] = value;
+    setExperienceList(updated);
+  };
+
+  const renderField = (index, field, label) => {
+    const value = experienceList[index][field] || '';
+    const isEditing = index === editIndex;
+
+    return (
+      <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
+        <Typography variant="subtitle2" sx={{ minWidth: 110 }}>{label}:</Typography>
+        {isEditing ? (
+          <TextField
+            value={value}
+            onChange={(e) => handleChange(index, field, e.target.value)}
+            size="small"
+            fullWidth
+          />
+        ) : (
+          <Typography variant="body2" color="text.secondary">{value || '—'}</Typography>
+        )}
+      </Box>
+    );
+  };
+
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
-      <Paper sx={{ p: 3, borderRadius: "8px" }}>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
-          <Typography variant="h6" sx={{ fontWeight: "bold" }}>Experience</Typography>
-          <IconButton onClick={() => setIsEditingExperience(!isEditingExperience)}>
-            <Edit fontSize="small" />
-          </IconButton>
-        </Box>
-        
-        {isEditingExperience ? (
-          <Box component="form" onSubmit={(e) => {
-            e.preventDefault();
-            console.log("Updated Experience Data:", experienceData);
-            //dispatch(updateUserExperience(experienceData));
-            setIsEditingExperience(false);
-          }}>
-            <TextField
-              fullWidth
-              label="Job Title"
-              value={experienceData.title}
-              onChange={(e) => setExperienceData({ ...experienceData, title: e.target.value })}
-              margin="normal"
-            />
-            <TextField
-              fullWidth
-              label="Company"
-              value={experienceData.company}
-              onChange={(e) => setExperienceData({ ...experienceData, company: e.target.value })}
-              margin="normal"
-            />
-            <TextField
-              fullWidth
-              label="Employment Type"
-              value={experienceData.employmentType}
-              onChange={(e) => setExperienceData({ ...experienceData, employmentType: e.target.value })}
-              margin="normal"
-            />
-            <Box sx={{ display: 'flex', gap: 2, mt: 1, mb: 2 }}>
-              <TextField
-                label="Start Date"
-                type="date"
-                value={experienceData.startDate}
-                onChange={(e) => setExperienceData({ ...experienceData, startDate: e.target.value })}
-                margin="normal"
-                InputLabelProps={{ shrink: true }}
-              />
-              <TextField
-                label="End Date"
-                type="date"
-                value={experienceData.endDate}
-                onChange={(e) => setExperienceData({ ...experienceData, endDate: e.target.value })}
-                margin="normal"
-                InputLabelProps={{ shrink: true }}
-              />
-            </Box>
-            <TextField
-              fullWidth
-              label="Location"
-              value={experienceData.location}
-              onChange={(e) => setExperienceData({ ...experienceData, location: e.target.value })}
-              margin="normal"
-            />
-            <TextField
-              fullWidth
-              multiline
-              rows={3}
-              label="Description"
-              value={experienceData.description}
-              onChange={(e) => setExperienceData({ ...experienceData, description: e.target.value })}
-              margin="normal"
-            />
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, mt: 2 }}>
-              <Button variant="outlined" onClick={() => setIsEditingExperience(false)}>
-                Cancel
-              </Button>
-              <Button variant="contained" type="submit">
-                Save
-              </Button>
-            </Box>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
+      <Paper sx={{
+        p: 3,
+        borderRadius: 4,
+        background: 'rgba(255, 255, 255, 0.2)',
+        boxShadow: '0 8px 32px rgba(31, 38, 135, 0.2)',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(255,255,255,0.18)',
+        fontFamily: 'Roboto, sans-serif'
+      }}>
+        <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 3 }}>
+          Experience
+        </Typography>
+
+        {experienceList.length > 0 ? (
+          <Box>
+            {experienceList.map((exp, index) => (
+              <Box key={index} sx={{ pl: 2, position: 'relative', mb: 4 }}>
+                {/* Vertical line */}
+                <Box sx={{
+                  position: 'absolute',
+                  left: 6,
+                  top: 0,
+                  bottom: 0,
+                  width: 2,
+                  backgroundColor: '#90caf9',
+                }} />
+                {/* Dot */}
+                <Box sx={{
+                  width: 14,
+                  height: 14,
+                  backgroundColor: '#1976d2',
+                  borderRadius: '50%',
+                  position: 'absolute',
+                  left: 0,
+                  top: 8,
+                }} />
+
+                <Box sx={{
+                  ml: 4,
+                  background: '#f9fafc',
+                  borderRadius: 3,
+                  p: 2,
+                  boxShadow: 1,
+                  position: 'relative',
+                }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                      <Work sx={{ verticalAlign: 'middle', mr: 1 }} />
+                      {exp.title || 'Job Title'}
+                    </Typography>
+                    <Tooltip title={editIndex === index ? "Save" : "Edit"}>
+                      <IconButton
+                        size="small"
+                        onClick={() => setEditIndex(editIndex === index ? null : index)}
+                      >
+                        {editIndex === index ? <Save /> : <Edit />}
+                      </IconButton>
+                    </Tooltip>
+                  </Box>
+
+                  <Divider sx={{ my: 1 }} />
+                  {renderField(index, 'company', 'Company')}
+                  {renderField(index, 'role', 'Role')}
+                  {renderField(index, 'from', 'Start Date')}
+                  {renderField(index, 'to', 'End Date')}
+                </Box>
+              </Box>
+            ))}
           </Box>
         ) : (
-          <>
-            {user.experience && user.experience.length > 0 ? (
-              user.experience.map((job, index) => (
-                <Box key={index} sx={{ display: "flex", alignItems: "flex-start", mb: 3 }}>
-                  <Work fontSize="large" sx={{ mr: 2, color: "#0077B5" }} />
-                  <Box>
-                    <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-                      {job.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {job.company} • {job.employmentType || "Full-time"}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {job.startDate || "Month Year"} - {job.endDate || "Present"}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {job.location || "Location"}
-                    </Typography>
-                    {job.description && (
-                      <Typography variant="body2" sx={{ mt: 1 }}>
-                        {job.description}
-                      </Typography>
-                    )}
-                  </Box>
-                </Box>
-              ))
-            ) : (
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Work fontSize="small" sx={{ mr: 1 }} />
-                <Typography variant="body1">No work experience added.</Typography>
-              </Box>
-            )}
-            
-            <Button 
-              startIcon={<AddCircleOutline />} 
-              variant="outlined" 
-              sx={{ mt: 2 }}
-              onClick={() => setIsEditingExperience(true)}
-            >
-              Add experience
-            </Button>
-          </>
+          <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+            No work experience added yet.
+          </Typography>
         )}
       </Paper>
     </motion.div>
-  )
+  );
 }
 
-export default ExperienceData
+export default ExperienceData;

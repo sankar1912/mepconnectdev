@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllUser, getfriendslist } from "../features/friends/friendsSlice";
+import { getAllUser, getfriendslist } from "../redux/slice/friendsSlice";
 import { useNotifications } from "@toolpad/core";
 import { motion } from "framer-motion";
 import {
@@ -25,8 +25,8 @@ import {
 import { Search, PersonAdd, PersonRemove, Person, School, Work } from "@mui/icons-material";
 
 import { useNavigate } from "react-router-dom";
-import { getAuth } from "../features/users/AuthSlice";
-import { searchresults } from "../features/Search/searchPeopleSlice";
+import { getAuth } from "../redux/slice/AuthSlice";
+import { searchresults } from "../redux/slice/searchPeopleSlice";
 
 const actions = [
   { icon: <Person />, name: "Name", value: "name" },

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Box, Grid, Paper, Tab, Tabs } from "@mui/material";
 import ActivityList from "./ActivityList"; 
 import { useDispatch, useSelector } from "react-redux";
-import { fetchActivity, getActivity } from "../../features/users/activitySlice";
-import { getAuth } from "../../features/users/AuthSlice";
+import { fetchActivity, getActivity } from "../../redux/slice/activitySlice";
+import { getAuth } from "../../redux/slice/AuthSlice";
 
 const activities = ["Posts", "Events", "Donations"];
 

@@ -11,7 +11,7 @@ import CreatePost from "./CreatePost";
 import CreateEvents from "./CreateEvents";
 import CreateDonations from "./CreateDonations";
 import { useSelector } from "react-redux";
-import { getAuth } from "../features/users/AuthSlice";
+import { getAuth } from "../redux/slice/AuthSlice";
 import { useNotifications } from "@toolpad/core";
 
 const WritePosts = () => {

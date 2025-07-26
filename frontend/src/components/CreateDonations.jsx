@@ -15,7 +15,7 @@ import {
   Paper,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { sendDonation } from "../features/feeds/donationsSlice";
+import { sendDonation } from "../redux/slice/donationsSlice";
 import { Grid } from "@mui/system";
 import { useNotifications } from "@toolpad/core";
 import useCloudinaryImage from "./hooks/useCloudinaryImage";

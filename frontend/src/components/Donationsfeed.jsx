@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchDonation,
   getAllDonations,
-} from "../features/feeds/donationsSlice";
+} from "../redux/slice/donationsSlice";
 import { useNavigate } from "react-router-dom";
 
 const ScrollTop = ({ children }) => {

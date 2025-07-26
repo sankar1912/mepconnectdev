@@ -33,7 +33,7 @@ import {
   Verified,
   Pending,
 } from '@mui/icons-material';
-import { fetchSingleDonation } from '../features/feeds/donationsSlice';
+import { fetchSingleDonation } from '../redux/slice/donationsSlice';
 import postbg from '../img/postbg.png';
 import { useNotifications } from '@toolpad/core';
 const DonationView = () => {

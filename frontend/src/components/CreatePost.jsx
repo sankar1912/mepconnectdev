@@ -11,8 +11,8 @@ import {
 } from "@mui/material";
 import { AddPhotoAlternate, Close } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
-import { getAuth } from "../features/users/AuthSlice";
-import { addNewPost } from "../features/feeds/postsSlice";
+import { getAuth } from "../redux/slice/AuthSlice";
+import { addNewPost } from "../redux/slice/postsSlice";
 import { useNotifications } from "@toolpad/core";
 import useCloudinaryImage from "./hooks/useCloudinaryImage";
 

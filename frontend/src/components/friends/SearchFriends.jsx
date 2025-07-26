@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllUser, getfriendslist } from "../../features/friends/friendsSlice";
+import { getAllUser, getfriendslist } from "../../redux/slice/friendsSlice";
 import { useNotifications } from "@toolpad/core";
 import { motion } from "framer-motion";
 import {
@@ -23,7 +23,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { Search, PersonAdd, PersonRemove, Person, School, Work } from "@mui/icons-material";
-import { getAuth, getStatus } from "../../features/users/AuthSlice";
+import { getAuth, getStatus } from "../../redux/slice/AuthSlice";
 import { useNavigate } from "react-router-dom";
 
 const actions = [

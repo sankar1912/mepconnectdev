@@ -1,17 +1,16 @@
-import { Edit, Email, Phone } from '@mui/icons-material';
-import { Box, Button, IconButton, Paper, TextField, Typography } from '@mui/material';
-import React, { useRef, useState } from 'react'
+import { Cake, CalendarToday, ChildCare, Edit, Email, LocationOn, Person, Phone, School, Work } from '@mui/icons-material';
+import { Box, Button, Grid, IconButton, Paper, TextField, Typography } from '@mui/material';
+import React, { useEffect, useRef, useState } from 'react'
 import {motion} from 'framer-motion'
 function AboutData({user}) {
       const [activeSection, setActiveSection] = useState("posts");
     
       const [isEditingAbout, setIsEditingAbout] = useState(false);
       const [aboutText, setAboutText] = useState(user?.about || "");
-
-
-    
-
       const aboutTextFieldRef = useRef(null);
+      useEffect(()=>{
+        console.log(user)
+      },[user])
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -23,49 +22,65 @@ function AboutData({user}) {
           <Typography variant="h6" sx={{ fontWeight: "bold" }}>About</Typography>
         </Box>
         
-        {isEditingAbout ? (
-          <Box component="form" onSubmit={(e) => {
-            e.preventDefault();
-            console.log("Updated About Data:", { about: aboutText });
-            //dispatch(updateUserAbout(aboutText));
-            setIsEditingAbout(false);
-          }}>
-            <TextField
-              inputRef={aboutTextFieldRef} 
-              fullWidth
-              multiline
-              rows={4}
-              value={aboutText}
-              onChange={(e) => setAboutText(e.target.value)}
-              placeholder="Write about yourself"
-              sx={{ mb: 2 }}
-            />
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
-              <Button variant="outlined" onClick={() => setIsEditingAbout(false)}>
-                Cancel
-              </Button>
-              <Button variant="contained" type="submit">
-                Save
-              </Button>
-            </Box>
-          </Box>
-        ) : (
-          <Typography variant="body1" sx={{ mb: 2 }}>
-            {aboutText || user?.about || "No information provided. Add a summary about yourself."}
-          </Typography>
-        )}
+        
         <Box sx={{ mt: 3 }}>
-          <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1 }}>Contact Info</Typography>
-          <Typography variant="body2" sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-            <Email fontSize="small" sx={{ mr: 1 }} /> {user?.email || "N/A"}
-          </Typography>
-          <Typography variant="body2" sx={{ display: "flex", alignItems: "center" }}>
-            <Phone fontSize="small" sx={{ mr: 1 }} /> {user?.phone || "N/A"}
-          </Typography>
+         <Typography sx={{color:"black"}} variant='h5'>Personal Details</Typography>
+              <Grid container spacing={2} direction="column" marginTop={5}>
+                <DetailItem icon={<Email sx={iconStyle} />} label="Email" value={user?.user?.email} />
+                <DetailItem icon={<Person sx={iconStyle} />} label="Father" value={user?.user?.father} />
+                <DetailItem icon={<ChildCare sx={iconStyle} />} label="Mother" value={user?.user?.mother} />
+                <DetailItem icon={<Phone sx={iconStyle} />} label="Phone" value={user?.user?.phone} />
+                <DetailItem icon={<Cake sx={iconStyle} />} label="Date of Birth" value={user?.user?.dob} />
+                <DetailItem icon={<LocationOn sx={iconStyle} />} label="Place" value={user?.user?.place} />
+                <DetailItem icon={<School sx={iconStyle} />} label="Degree" value={`${user?.user?.degree} (${user?.user?.department})`} />
+                <DetailItem icon={<CalendarToday sx={iconStyle} />} label="Batch" value={user?.user?.batch} />
+                <DetailItem icon={<Work sx={iconStyle} />} label="Role" value={user?.user?.role} />
+                
+              </Grid>
         </Box>
       </Paper>
     </motion.div>
   )
 }
+const iconStyle = {
+  color: 'primary.main',
+  fontSize: 24,
+  mr: 2,
+};
+
+const DetailItem = ({ icon, label, value }) => (
+  <Grid item sx={{
+    display: 'flex',
+    alignItems: 'center',
+    p: 2,
+    borderRadius: 3,
+    background: 'rgba(255, 255, 255, 0.4)',
+    backdropFilter: 'blur(6px)',
+    border: '1px solid rgba(255, 255, 255, 0.3)',
+    transition: 'all 0.3s ease',
+    '&:hover': {
+      backgroundColor: 'rgba(25, 118, 210, 0.1)',
+      borderColor: 'primary.main',
+    },
+  }}>
+      {icon}
+      <Box display="flex" width="100%">
+        <Typography
+          sx={{
+            minWidth: '120px',
+            fontWeight: 500,
+            color: 'text.primary',
+          }}
+        >
+          {label}
+        </Typography>
+        <Typography sx={{ mx: 1 }}>:</Typography>
+        <Typography sx={{ color: 'text.secondary', wordBreak: 'break-word' }}>
+          {value || 'N/A'}
+        </Typography>
+      </Box>
+
+  </Grid>
+);
 
 export default AboutData

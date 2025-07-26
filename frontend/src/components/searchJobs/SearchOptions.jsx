@@ -26,8 +26,8 @@ import { useDispatch } from "react-redux";
 import {
   fetchSearchRequest,
   reduceByName,
-} from "../../features/Search/searchPeopleSlice";
-import { fetchJobSearch } from "../../features/feeds/jobsSlice";
+} from "../../redux/slice/searchPeopleSlice";
+import { fetchJobSearch } from "../../redux/slice/jobsSlice";
 
 const SearchOptions = () => {
   const [searchName, setSearchName] = useState("");

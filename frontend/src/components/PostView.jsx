@@ -1,32 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  addComment,
-  addLike,
-  displayPost,
-  getPost,
-  removeLike,
-} from "../features/feeds/postsSlice";
-import {
-  Avatar,
-  Box,
-  Card,
-  CardContent,
-  IconButton,
-  Modal,
-  Typography,
-  Divider,
-  TextField,
-  Button,
+import {addComment,addLike,displayPost,getPost,removeLike,
+} from "../redux/slice/postsSlice";
+import {Avatar,Box,Card,CardContent,IconButton,Modal,Typography,Divider,TextField,Button,
 } from "@mui/material";
-import {
-  ChatBubbleOutline,
-  ThumbDownAltOutlined,
-  ThumbUpAltOutlined,
-  Share as ShareIcon,
-  Close,
+import {ChatBubbleOutline,ThumbDownAltOutlined,ThumbUpAltOutlined,Share as ShareIcon,Close,
 } from "@mui/icons-material";
-import { getAuth } from "../features/users/AuthSlice";
+import { getAuth } from "../redux/slice/AuthSlice";
 import { useNavigate } from "react-router-dom";
 import Share from "./Share";
 import Slider from "react-slick";

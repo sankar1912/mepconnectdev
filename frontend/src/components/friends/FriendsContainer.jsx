@@ -5,8 +5,8 @@ import MyFriends from './MyFriends';
 import MyInvites from './MyInvites';
 import Container from '../SearchPeople/Container';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchMyList } from '../../features/friends/friendsSlice';
-import { getAuth } from '../../features/users/AuthSlice';
+import { fetchMyList } from '../../redux/slice/friendsSlice';
+import { getAuth } from '../../redux/slice/AuthSlice';
 
 function FriendsContainer() {
   const [options, setOptions] = useState('friends');

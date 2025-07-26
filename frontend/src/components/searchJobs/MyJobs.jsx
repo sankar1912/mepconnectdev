@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserJobs, setSearchedJob, trackMyJobs } from '../../features/feeds/jobsSlice';
-import { getAuth } from '../../features/users/AuthSlice';
+import { getUserJobs, setSearchedJob, trackMyJobs } from '../../redux/slice/jobsSlice';
+import { getAuth } from '../../redux/slice/AuthSlice';
 
 import {
   Box,

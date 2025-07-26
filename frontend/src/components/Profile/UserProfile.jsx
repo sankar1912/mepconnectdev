@@ -21,13 +21,13 @@ import {
   VolunteerActivism,
 } from "@mui/icons-material";
 
-import { getAuth } from "../../features/users/AuthSlice";
+import { getAuth } from "../../redux/slice/AuthSlice";
 
 import ProfileContainer from "./ProfileContainer";
 import {
   fetchSelectedUser,
   searchUser,
-} from "../../features/Search/searchPeopleSlice";
+} from "../../redux/slice/searchPeopleSlice";
 import Slider from "react-slick";
 import { useNavigate } from "react-router-dom";
 
@@ -155,7 +155,7 @@ function UserProfile() {
                     headline: headlineText,
                   });
                   //dispatch(updateUserProfile({ name: nameText, headline: headlineText }));
-                  setIsEditingProfile(false); // Exit edit mode
+                  setIsEditingProfile(false); 
                 }}
               >
                 <TextField

@@ -30,14 +30,14 @@ import {
 } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import { applyJob, fetchJobSearch } from "../features/feeds/jobsSlice";
+import { applyJob, fetchJobSearch } from "../redux/slice/jobsSlice";
 import { useNavigate } from "react-router-dom";
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import VerifiedIcon from '@mui/icons-material/Verified';
-import { getAuth } from "../features/users/AuthSlice";
+import { getAuth } from "../redux/slice/AuthSlice";
 const ScrollTop = ({ children }) => {
   const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 100 });
 

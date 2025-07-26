@@ -18,18 +18,16 @@ import { Search, Close, ExpandMore, ExpandLess } from "@mui/icons-material";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
-import { fetchSearchRequest, reduceByName } from "../../features/Search/searchPeopleSlice";
+import { fetchSearchRequest, reduceByName } from "../../redux/slice/searchPeopleSlice";
 
-const SearchOptions = () => {
+const SearchOptions = ({selectedFilters, setSelectedFilters}) => {
   const [searchName, setSearchName] = useState("");
   const [searchPlace, setSearchPlace] = useState("");
   const [placeSuggestions, setPlaceSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [selectedFilters, setSelectedFilters] = useState({
-    city: [],
-    batch: [],
-    department: [],
-  });
+  const [searchCompany, setSearchCompany] =useState(""); 
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const theme = useTheme();
@@ -72,6 +70,8 @@ const SearchOptions = () => {
   };
 
   const handleFilterChange = (type, value) => {
+    setPage(1);
+    setLimit(10);
     setSelectedFilters((prev) => ({ ...prev, [type]: value }));
   };
 
@@ -83,15 +83,20 @@ const SearchOptions = () => {
   };
 
   useEffect(()=>{
-    console.log(selectedFilters);
+    console.log(searchName);
     dispatch(fetchSearchRequest({places: selectedFilters.city, 
       batchs: selectedFilters.batch, 
-      depts: selectedFilters.department}))
-  },[selectedFilters,dispatch])
+      depts: selectedFilters.department,
+      limit:limit,
+      page:page,
+      name:searchName,
+      company:searchCompany,
+    }))
+  },[selectedFilters,dispatch, searchName])
 
-  useEffect(()=>{
-    dispatch(reduceByName({name:searchName}))
-  },[searchName,dispatch])
+  // useEffect(()=>{
+  //   dispatch(reduceByName({name:searchName}))
+  // },[searchName])
 
 
   return (
@@ -126,7 +131,10 @@ const SearchOptions = () => {
                 variant="outlined"
                 placeholder="Search by Name..."
                 value={searchName}
-                onChange={(e) => setSearchName(e.target.value)}
+                onChange={(e) => {
+                  setSearchName(e.target.value);
+                  setSelectedFilters((prev) => ({ ...prev, name: e.target.value }));
+                }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -150,7 +158,39 @@ const SearchOptions = () => {
               />
             </motion.div>
 
-       
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}>
+              <TextField
+                fullWidth
+                variant="outlined"
+                placeholder="Search by Company..."
+                value={searchCompany}
+                onChange={(e) => {
+                  setSearchCompany(e.target.value);
+                  console.log(selectedFilters)
+                  setSelectedFilters((prev) => ({ ...prev, company: e.target.value }));
+                }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Search sx={{ color: "#555" }} />
+                    </InputAdornment>
+                  ),
+                  endAdornment: searchName && (
+                    <IconButton onClick={() => setSearchCompany("")}>
+                      <Close sx={{ color: "#555" }} />
+                    </IconButton>
+                  ),
+                }}
+                sx={{
+                  mb: 3,
+                  borderRadius: "12px",
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "25px",
+                    background: "#fff",
+                  },
+                }}
+              />
+            </motion.div>
             <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 }}>
               <TextField
                 fullWidth
@@ -256,10 +296,10 @@ const SearchOptions = () => {
        
          <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.6 }}>
               <Box sx={{ mt: 3, display: "flex", flexWrap: "wrap", gap: 1 }}>
-                {Object.entries(selectedFilters).map(([key, values]) =>
-                  values.map((value) => (
-                    <Chip key={value} label={value} onDelete={() => removeFilter(key, value)} deleteIcon={<Close />} sx={{ background: "#007bff", color: "#fff" }} />
-                  ))
+                {Object?.entries(selectedFilters)?.map(([key, values]) =>
+                  (Array.isArray(values) ? values : [values]).map((value) => (
+  <Chip key={value} label={value} onDelete={() => removeFilter(key, value)} deleteIcon={<Close />} sx={{ background: "#007bff", color: "#fff" }} />
+))
                 )}
               </Box>
             </motion.div>

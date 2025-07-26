@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserJobs } from '../../features/feeds/jobsSlice';
-import { getAuth } from '../../features/users/AuthSlice';
+
+import { getAuth } from '../../redux/slice/AuthSlice';
 
 import {
   Box,
@@ -26,7 +26,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import { useNavigate } from 'react-router-dom';
 import { Done} from '@mui/icons-material';
-import { fetchJobsPermit, getJobsPermit, updateJobRejected, updateJobVerified } from '../../features/admin/permitSlice';
+import { fetchJobsPermit, getJobsPermit, updateJobRejected, updateJobVerified } from '../../redux/slice/permitSlice';
 
 function PermitJobs() {
   const dispatch = useDispatch();

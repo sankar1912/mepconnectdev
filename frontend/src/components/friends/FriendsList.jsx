@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getAuth } from '../../features/users/AuthSlice';
+import { getAuth } from '../../redux/slice/AuthSlice';
 import { 
     Grid, TextField, List, ListItem, ListItemText, IconButton, Paper, 
     Typography, Avatar, InputAdornment, Box 
 } from '@mui/material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import SearchIcon from '@mui/icons-material/Search';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PersonRemove } from '@mui/icons-material';
 

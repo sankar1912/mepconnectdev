@@ -1,14 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "../features/users/AuthSlice";
-import friendsReducer from "../features/friends/friendsSlice";
-import postsReducer from "../features/feeds/postsSlice";
-import eventsReducer from "../features/feeds/eventsSlice";
-import jobsReducer from "../features/feeds/jobsSlice";
-import searchpeopleReducer from "../features/Search/searchPeopleSlice";
-import donationsReducer from "../features/feeds/donationsSlice";
-import permitReducer from "../features/admin/permitSlice";
-import activityReducer from "../features/users/activitySlice";
-
+import authReducer from "../redux/slice/AuthSlice";
+import friendsReducer from "../redux/slice/friendsSlice";
+import postsReducer from "../redux/slice/postsSlice";
+import eventsReducer from "../redux/slice/eventsSlice";
+import jobsReducer from "../redux/slice/jobsSlice";
+import searchpeopleReducer from "../redux/slice/searchPeopleSlice";
+import donationsReducer from "../redux/slice/donationsSlice";
+import permitReducer from "../redux/slice/permitSlice";
+import notificationReducer from "../redux/slice/notificationSlice";
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -19,18 +18,6 @@ export const store = configureStore({
     searchpeople: searchpeopleReducer,
     donations: donationsReducer,
     permit: permitReducer,
-    activity: activityReducer,
+    notification:notificationReducer
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [
-          "posts/setPosts",
-          "events/setEvents",
-          "donations/setDonations",
-          "activity/setResults",
-        ], 
-      },
-    }),
-  devTools: process.env.NODE_ENV !== "production", 
 });

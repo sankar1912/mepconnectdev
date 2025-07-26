@@ -9,7 +9,7 @@ import {
 import { EmailOutlined, VpnKeyOutlined } from "@mui/icons-material";
 import { Link,  useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAuth, getStatus,loginRequest } from "../../features/users/AuthSlice";
+import { getAuth, getStatus,loginRequest } from "../../redux/slice/AuthSlice";
 import { useNotifications } from "@toolpad/core";
 
 

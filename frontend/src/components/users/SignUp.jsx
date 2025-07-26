@@ -18,7 +18,7 @@ import {
 import { EmailOutlined, Person2, VpnKeyOutlined, PhotoCamera } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createUser, getAuth, loadUserRequest } from "../../features/users/AuthSlice";
+import { createUser, getAuth, loadUserRequest } from "../../redux/slice/AuthSlice";
 import { useNotifications } from "@toolpad/core";
 import Compressor from "compressorjs";
 import useCloudinaryImage from "../hooks/useCloudinaryImage";

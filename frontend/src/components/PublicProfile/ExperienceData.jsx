@@ -1,58 +1,109 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import {
+  Box, Typography, Paper, IconButton, TextField, Divider, Tooltip
+} from '@mui/material';
 import { motion } from 'framer-motion';
-import { Paper,Typography,IconButton,Box,TextField, Button } from '@mui/material';
-import { AddCircleOutline, Edit, Work } from '@mui/icons-material';
-function ExperienceData({user}) {
+import { Edit, Save, Work } from '@mui/icons-material';
 
-     
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
-      <Paper sx={{ p: 3, borderRadius: "8px" }}>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
-          <Typography variant="h6" sx={{ fontWeight: "bold" }}>Experience</Typography>
-        </Box>
+function ExperienceData({ user }) {
+  const [experienceList, setExperienceList] = useState(user?.experience || []);
+  const [editIndex, setEditIndex] = useState(null); // which experience block is in edit mode
+
+  const handleChange = (index, field, value) => {
+    const updated = [...experienceList];
+    updated[index][field] = value;
+    setExperienceList(updated);
+  };
+  useEffect(()=>{
+    setExperienceList(user?.user?.experience)
+  },[])
+
+  const renderField = (index, field, label) => {
+    const value = experienceList[index][field] || '';
+    const isEditing = index === editIndex;
+
+    return (
+      <Box sx={{ display: 'flex', gap: 1, mt: 1, textAlign:"left" }}>
+        <Typography variant="subtitle2" sx={{ minWidth: 110 }}>{label}:</Typography>
         
-            {user.experience && user.experience.length > 0 ? (
-              user.experience.map((job, index) => (
-                <Box key={index} sx={{ display: "flex", alignItems: "flex-start", mb: 3 }}>
-                  <Work fontSize="large" sx={{ mr: 2, color: "#0077B5" }} />
-                  <Box>
-                    <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-                      {job.title}
+          <Typography variant="body2" color="text.secondary">{value || '—'}</Typography>
+
+      </Box>
+    );
+  };
+
+  return (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
+      <Paper sx={{
+        p: 3,
+        borderRadius: 4,
+        background: 'rgba(255, 255, 255, 0.2)',
+        boxShadow: '0 8px 32px rgba(31, 38, 135, 0.2)',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(255,255,255,0.18)',
+        fontFamily: 'Roboto, sans-serif'
+      }}>
+        <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 3 }}>
+          Experience
+        </Typography>
+
+        {experienceList.length > 0 ? (
+          <Box>
+            {experienceList.map((exp, index) => (
+              <Box key={index} sx={{ pl: 2, position: 'relative', mb: 4 }}>
+                {/* Vertical line */}
+                <Box sx={{
+                  position: 'absolute',
+                  left: 6,
+                  top: 0,
+                  bottom: 0,
+                  width: 2,
+                  backgroundColor: '#90caf9',
+                }} />
+                {/* Dot */}
+                <Box sx={{
+                  width: 14,
+                  height: 14,
+                  backgroundColor: '#1976d2',
+                  borderRadius: '50%',
+                  position: 'absolute',
+                  left: 0,
+                  top: 8,
+                }} />
+
+                <Box sx={{
+                  ml: 4,
+                  background: '#f9fafc',
+                  borderRadius: 3,
+                  p: 2,
+                  boxShadow: 1,
+                  position: 'relative',
+                }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'left', alignItems: 'left' }}>
+                    <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                      <Work sx={{ verticalAlign: 'middle', mr: 1 }} />
+                      {exp.company || 'Not mentioned'}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {job.company} • {job.employmentType || "Full-time"}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {job.startDate || "Month Year"} - {job.endDate || "Present"}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {job.location || "Location"}
-                    </Typography>
-                    {job.description && (
-                      <Typography variant="body2" sx={{ mt: 1 }}>
-                        {job.description}
-                      </Typography>
-                    )}
+                  
                   </Box>
+
+                  <Divider sx={{ my: 1 }} />
+                  {renderField(index, 'company', 'Company')}
+                  {renderField(index, 'role', 'Role')}
+                  {renderField(index, 'from', 'Start Date')}
+                  {renderField(index, 'to', 'End Date')}
                 </Box>
-              ))
-            ) : (
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Work fontSize="small" sx={{ mr: 1 }} />
-                <Typography variant="body1">No work experience added.</Typography>
               </Box>
-            )}
-            
-
-
+            ))}
+          </Box>
+        ) : (
+          <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+            No work experience added yet.
+          </Typography>
+        )}
       </Paper>
     </motion.div>
-  )
+  );
 }
 
-export default ExperienceData
+export default ExperienceData;
