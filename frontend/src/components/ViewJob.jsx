@@ -5,9 +5,9 @@ import {WorkOutline,LocationOn,Business,AttachMoney,EmojiObjects,Email,Verified,
 } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getJobById } from '../features/feeds/jobsSlice';
-import { getAuth } from '../features/users/AuthSlice';
-import useShare from './hooks/useShare';
+import { getJobById } from '../redux/slice/jobsSlice';
+import { getAuth } from '../redux/slice/AuthSlice';
+
 
 function ViewJob({show}) {
   const { _id } = useParams();

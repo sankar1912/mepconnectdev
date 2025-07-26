@@ -32,8 +32,8 @@ import {
   fetchPost,
   getAllPosts,
   removeLike,
-} from "../features/feeds/postsSlice";
-import { getAuth } from "../features/users/AuthSlice";
+} from "../redux/slice/postsSlice";
+import { getAuth } from "../redux/slice/AuthSlice";
 import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -90,6 +90,10 @@ const loadMorePosts = async () => {
     setHasMore(false)
   }
 };
+
+useEffect(()=>{
+console.log(posts)
+},[posts])
   const limit = 200;
 
   const toggleExpand = (id) => {
@@ -174,16 +178,16 @@ const loadMorePosts = async () => {
       {
          posts.map((post) => (
           <motion.div
-            key={post._id}
+            key={post?._id}
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.99 }}
             transition={{ duration: 0.3 }}
             onClick={()=>{
-              navigate(`/post/view/${post._id}`)
+              navigate(`/post/view/${post?._id}`)
             }}
           >
             <Card sx={cardStyle}>
-              {Array.isArray(post.media) && post.media.length > 0 && (
+              {Array.isArray(post?.media) && post?.media.length > 0 && (
                 <Slider
                   dots
                   infinite={false}
@@ -192,7 +196,7 @@ const loadMorePosts = async () => {
                   slidesToScroll={1}
                   arrows={!isMobile}
                 >
-                  {post.media.map((file, index) => (
+                  {post?.media.map((file, index) => (
                     <Box key={index} component="div">
                       <img
                         src={file}
@@ -212,10 +216,10 @@ const loadMorePosts = async () => {
 
               <CardContent>
                 <Box sx={{ display: "flex", gap: 2, mb: 1, alignItems: "center" }}>
-                  <Avatar src={post.user?.profileImage || "/"} />
+                  <Avatar src={post?.user?.profileImage || "/"} />
                   <Box>
                     <Typography variant="subtitle1" fontWeight={600}>
-                      {post.name}
+                      {post?.name}
                       {post?.verified ? (
                         <Tooltip title="Verified Profile">
                           <Verified fontSize="small" color="info" sx={{ ml: 1 }} />
@@ -227,7 +231,7 @@ const loadMorePosts = async () => {
                       )}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      {post.department}
+                      {post?.department}
                     </Typography>
                   </Box>
                 </Box>
@@ -237,12 +241,12 @@ const loadMorePosts = async () => {
                   fontWeight={500}
                   sx={{ textAlign: "justify", mt: 1 }}
                 >
-                  {expandedPostId === post._id
-                    ? post.text
-                    : `${post.text.slice(0, limit)}...`}
-                  {post.text.length > limit && (
+                  {expandedPostId === post?._id
+                    ? post?.text
+                    : `${post?.text?.slice(0, limit)}...`}
+                  {post?.text?.length > limit && (
                     <Button
-                      onClick={() => toggleExpand(post._id)}
+                      onClick={() => toggleExpand(post?._id)}
                       size="small"
                       sx={{
                         ml: 1,
@@ -251,13 +255,13 @@ const loadMorePosts = async () => {
                         fontSize: "0.85rem",
                       }}
                     >
-                      {expandedPostId === post._id ? "Show Less" : "Show More"}
+                      {expandedPostId === post?._id ? "Show Less" : "Show More"}
                     </Button>
                   )}
                 </Typography>
 
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: 2 }}>
-                  {post.hashtags?.map((tag, index) => (
+                  {post?.hashtags?.map((tag, index) => (
                     <Typography
                       key={index}
                       variant="caption"
@@ -280,7 +284,7 @@ const loadMorePosts = async () => {
                     <Box sx={{ display: "flex", gap: 2 }}>
                       <Tooltip title="Like">
                         <IconButton
-                          onClick={() => dispatch(addLike({ _id: post._id }))}
+                          onClick={() => dispatch(addLike({ _id: post?._id }))}
                           disabled={post?.likedBy?.includes(auth.user.email)}
                         >
                           <ThumbUpAltOutlined />
@@ -291,17 +295,17 @@ const loadMorePosts = async () => {
                       </Tooltip>
                       <Tooltip title="Unlike">
                         <IconButton
-                          onClick={() => dispatch(removeLike({ _id: post._id }))}
+                          onClick={() => dispatch(removeLike({ _id: post?._id }))}
                           disabled={!post?.likedBy?.includes(auth.user.email)}
                         >
                           <ThumbDownAltOutlined />
                         </IconButton>
                       </Tooltip>
                       <Tooltip title="Comments">
-                        <IconButton onClick={() => navigate(`/post/view/${post._id}`)}>
+                        <IconButton onClick={() => navigate(`/post/view/${post?._id}`)}>
                           <ChatBubbleOutline />
                           <Typography sx={{ ml: 0.5 }} variant="caption">
-                            {post.comments}
+                            {post?.comments}
                           </Typography>
                         </IconButton>
                       </Tooltip>

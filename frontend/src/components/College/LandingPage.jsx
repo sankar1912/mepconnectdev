@@ -18,13 +18,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { useMediaQuery } from "@mui/material";
 import SocialIcons from "./SocialIcons";
-import SelectActionCard from "./SelectActionCard";
 import { useNavigate } from "react-router-dom";
-import DepartmentEvents from "./DepartmentEvents";
 import { useDispatch } from "react-redux";
-import { getEvents } from "../../features/feeds/eventsSlice";
-import NotableAlumni from "./NotableAlumni";
-import SlideShow from "./SlideShow";
+import { getEvents } from "../../redux/slice/eventsSlice";
 import HelperCard from "./HelperCard";
 import JourneyNotes from "./JourneyNotes";
 

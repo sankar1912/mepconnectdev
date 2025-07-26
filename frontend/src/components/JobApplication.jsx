@@ -34,8 +34,8 @@ import {
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { addJobApllication, getAllJobsPost, getJobById } from "../features/feeds/jobsSlice";
-import { getAuth } from "../features/users/AuthSlice";
+import { addJobApllication, getAllJobsPost, getJobById } from "../redux/slice/jobsSlice";
+import { getAuth } from "../redux/slice/AuthSlice";
 import useCloudinaryFile from "./hooks/useCloudinaryFile";
 
 

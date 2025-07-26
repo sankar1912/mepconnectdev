@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserJobs } from '../../features/feeds/jobsSlice';
-import { getAuth } from '../../features/users/AuthSlice';
+import { getUserJobs } from '../../redux/slice/jobsSlice';
+import { getAuth } from '../../redux/slice/AuthSlice';
 
 import {
   Box,
@@ -42,8 +42,8 @@ function SearchResults() {
       </Typography>
 
       <Grid container spacing={4}>
-        {Array.isArray(jobs) && jobs.length > 0 ? (
-          jobs.filter((job)=>job.owner._id!==auth.user._id).map((job) => (
+        {Array?.isArray(jobs) && jobs?.length > 0 ? (
+          jobs.filter((job)=>job.owner?._id!==auth.user?._id).map((job) => (
             <Grid item xs={12} sm={6}  key={job._id} >
               <Card
                 elevation={3}

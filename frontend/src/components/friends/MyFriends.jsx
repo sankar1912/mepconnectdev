@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { getfriendslist } from '../../features/friends/friendsSlice';
+import { getfriendslist } from '../../redux/slice/friendsSlice';
 import { Box, Typography, Grid, IconButton, Chip, Tooltip } from '@mui/material';
 import { EmailOutlined, ChatBubbleOutline, Verified } from '@mui/icons-material';
 import { motion } from 'framer-motion';

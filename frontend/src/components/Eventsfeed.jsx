@@ -30,7 +30,7 @@ import {
   getAllEvents,
   getEvents,
   likeEvent,
-} from "../features/feeds/eventsSlice";
+} from "../redux/slice/eventsSlice";
 
 import CustomCalendar from "./CustomCalendar";
 import { useCookies } from "react-cookie";

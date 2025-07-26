@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import PageSider from './PageSider';
-import DisplayList from './DisplayList';
+
 import FriendsList from './FriendsList';
-import SearchFriends from './SearchFriends';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { getAuth, getStatus } from '../../features/users/AuthSlice';
+import { getAuth, getStatus } from '../../redux/slice/AuthSlice';
 import { Box } from '@mui/joy';
 import { SentimentDissatisfiedOutlined } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 import Container from '../SearchPeople/Container';
-import { fetchMyList } from '../../features/friends/friendsSlice';
+import { fetchMyList } from '../../redux/slice/friendsSlice';
 
 const FriendsPage = () => {
     const [content, setContent] = useState('');

@@ -9,6 +9,7 @@ import {
   Divider,
   Stack,
   Chip,
+  Grid,
 } from "@mui/material";
 import {
   Article,
@@ -18,19 +19,28 @@ import {
   Pending,
   PersonAddAlt1,
   LockOutlined,
+  Email,
+  Phone,
+  Cake,
+  LocationOn,
+  School,
+  CalendarToday,
+  Work,
+  Wc,
+  Person,
 } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchSelectedUser,
   searchUser,
-} from "../features/Search/searchPeopleSlice";
+} from "../redux/slice/searchPeopleSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { fetchMyList } from "../features/friends/friendsSlice";
-import { getAuth } from "../features/users/AuthSlice";
+import { fetchMyList } from "../redux/slice/friendsSlice";
+import { getAuth } from "../redux/slice/AuthSlice";
 
 import PublicProfileContainer from "./PublicProfile/PublicProfileContainer";
 
@@ -130,6 +140,26 @@ function PublicProfile() {
             <Typography variant="h6" color="text.secondary" mt={1}>
               {selectedUser?.headline}
             </Typography>
+            {/* About Section Styled Like AboutData.jsx */}
+            <Box sx={{ mt: 2 }}>
+              <Card
+                sx={{
+                  p: 3,
+                  borderRadius: 3,
+                  background: "rgba(255,255,255,0.85)",
+                  boxShadow: 2,
+                }}
+              >
+                <Typography variant="h6" fontWeight="bold" sx={{ mb: 1 }}>
+                  About
+                </Typography>
+                <Typography variant="body1" sx={{ mb: 2 }}>
+                  {selectedUser?.user?.about ||
+                    "No information provided. Add a summary about yourself."}
+                </Typography>
+              </Card>
+             
+            </Box>
           </Box>
         </Card>
 
@@ -473,4 +503,44 @@ function PublicProfile() {
   );
 }
 
+const iconStyle = {
+  color: 'primary.main',
+  fontSize: 24,
+  mr: 2,
+};
+
+const DetailItem = ({ icon, label, value }) => (
+  <Grid item sx={{
+    display: 'flex',
+    alignItems: 'center',
+    p: 2,
+    borderRadius: 3,
+    background: 'rgba(255, 255, 255, 0.4)',
+    backdropFilter: 'blur(6px)',
+    border: '1px solid rgba(255, 255, 255, 0.3)',
+    transition: 'all 0.3s ease',
+    '&:hover': {
+      backgroundColor: 'rgba(25, 118, 210, 0.1)',
+      borderColor: 'primary.main',
+    },
+  }}>
+      {icon}
+      <Box display="flex" width="100%">
+        <Typography
+          sx={{
+            minWidth: '120px',
+            fontWeight: 500,
+            color: 'text.primary',
+          }}
+        >
+          {label}
+        </Typography>
+        <Typography sx={{ mx: 1 }}>:</Typography>
+        <Typography sx={{ color: 'text.secondary', wordBreak: 'break-word' }}>
+          {value || 'N/A'}
+        </Typography>
+      </Box>
+
+  </Grid>
+);
 export default PublicProfile;

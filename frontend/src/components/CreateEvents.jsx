@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
-import { addEvent } from "../features/feeds/eventsSlice";
+import { addEvent } from "../redux/slice/eventsSlice";
 
 const departments =  ["Civil Engineering",
   "Mechanical Engineering",

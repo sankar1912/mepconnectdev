@@ -28,7 +28,7 @@ import {
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getAuth } from "../../features/users/AuthSlice";
+import { getAuth } from "../../redux/slice/AuthSlice";
 
 function JobTracker() {
   const { _id } = useParams();

@@ -5,7 +5,10 @@ const Donation = require('../models/donations');
 const Friends = require("../models/friends");
 const searchUser = async (req, res) => {
   try {
-    const { place, batch, dept } = req.query;
+    const { place, batch, dept, name, company } = req.query;
+    const { page = 1, limit = 10 } = req.query;
+   
+    const skip = (parseInt(page) - 1) * parseInt(limit);
     let query = {};
     if (place) {
       query.place = Array.isArray(place) ? { $in: place } : place;
@@ -13,6 +16,12 @@ const searchUser = async (req, res) => {
     if (dept) {
       query.department = Array.isArray(dept) ? { $in: dept } : dept;
     }
+    if(name){
+      query.name = { $regex: name, $options: "i" };
+    }
+    // if(company){
+    //   query.experience.company ={$regex:company, $options:"i"}
+    // }
     if (batch) {
       const batchYears = Array.isArray(batch) ? batch.map(Number) : [Number(batch)];
       query.$or = batchYears.map(year => ({
@@ -22,7 +31,10 @@ const searchUser = async (req, res) => {
         }
       }));
     }
-    const users = await User.find(query);
+    console.log(query)
+    const users = await User.find(query)
+    .skip(skip)
+    .limit(parseInt(limit));
     res.status(200).json({ message: "Users found", users });
   } catch (error) {
     console.error("Error in searchUser:", error);

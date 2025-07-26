@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import {
   Grid,
   Box,
@@ -15,20 +16,21 @@ import {
 import { Verified, Pending, Refresh } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
-import { searchresults, fetchSearchRequest } from "../../features/Search/searchPeopleSlice";
-import { getfriendslist, sendFriendequest } from "../../features/friends/friendsSlice";
+import { searchresults, fetchSearchRequest } from "../../redux/slice/searchPeopleSlice";
+import { getfriendslist, sendFriendequest } from "../../redux/slice/friendsSlice";
 import { useNavigate } from "react-router-dom";
-import { getAuth } from "../../features/users/AuthSlice";
 
-const SearchResults = () => {
+const SearchResults = ({selectedFilters, setSeletedFilters}) => {
   const dispatch = useDispatch();
   const users = useSelector(searchresults) || [];
   const friendsList = useSelector(getfriendslist);
-
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [hasMore, setHasMore] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [note, setNote] = useState("");
-  const {auth} = useSelector(getAuth);
+
   const handleOpenModal = (user) => {
     setSelectedUser(user);
     setOpenModal(true);
@@ -41,12 +43,34 @@ const SearchResults = () => {
   };
 
   const handleRefresh = () => {
-    dispatch(fetchSearchRequest({ places: [], depts: [], batchs: [] }));
+    setLimit(10);
+    setPage(1);
+    setHasMore(true);
+    dispatch(fetchSearchRequest({ places: [], depts: [], batchs: [], page: 1, limit: 10 }));
+  };
+
+  // Load more users when scrolling
+  const fetchMoreUsers = () => {
+    const nextPage = page + 1;
+    dispatch(fetchSearchRequest({places: selectedFilters?.city, 
+      batchs: selectedFilters?.batch, 
+      depts: selectedFilters?.department,
+      limit:limit,
+      page:page,
+      name:selectedFilters?.name,
+      company:selectedFilters?.company
+    }));
+    setPage(nextPage);
+    console.log(hasMore)
+    // If less than limit users returned, stop loading more
+    // if (users.length < page * limit) {
+    //   setHasMore(false);
+    // }
   };
 
   // Filter users to exclude those already in the friendsList
   const filteredUsers = users.filter(user => 
-    !friendsList.some(friend => friend.email === user.email) && !auth?.user?.email
+    !friendsList?.some(friend => friend.email === user.email)
   );
   const navigate=useNavigate();
 
@@ -57,91 +81,103 @@ const SearchResults = () => {
         <IconButton onClick={handleRefresh}><Refresh /></IconButton>
       </Box>
 
-      <Grid container spacing={4}>
-        {filteredUsers.map((user) => (
-          <Grid item xs={12} sm={6} key={user._id}>
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ type: "spring", stiffness: 200 }}
-            >
-              <Box
-                sx={{
-                  height: 450,
-                  position: "relative",
-                  borderRadius: 5,
-                  overflow: "hidden",
-                  boxShadow: 4,
-                  backgroundImage: `url(${user.profileImage || "https://via.placeholder.com/400"})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  cursor: "pointer",
-                }}
-                
+      <InfiniteScroll
+        dataLength={filteredUsers.length-1}
+        next={fetchMoreUsers}
+        hasMore={hasMore}
+        loader={<Typography textAlign="center" mt={2}>Loading...</Typography>}
+        endMessage={
+          <Typography textAlign="center" mt={2} color="textSecondary">
+            No more users to display.
+          </Typography>
+        }
+      >
+        <Grid container spacing={4}>
+          {filteredUsers.map((user) => (
+            <Grid item xs={12} sm={6} key={user._id}>
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 200 }}
               >
                 <Box
                   sx={{
-                    position: "absolute",
-                    width: "100%",
-                    height: "100%",
-                    backdropFilter: "blur(2px)",
-                    background: "linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.3))",
-                    color: "#fff",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "flex-end",
-                    p: 3,
+                    height: 450,
+                    position: "relative",
+                    borderRadius: 5,
+                    overflow: "hidden",
+                    boxShadow: 4,
+                    backgroundImage: `url(${user.profileImage || "https://via.placeholder.com/400"})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    cursor: "pointer",
                   }}
                 >
-                  <Typography variant="h6" fontWeight="bold" sx={{ display: "flex", alignItems: "flex-start" }}>
-                    {user.name}
-                    {user.verified ? (
-                      <Verified fontSize="small" sx={{ ml: 1, color: "lightblue" }} />
-                    ) : (
-                      <Pending fontSize="small" sx={{ ml: 1 }} />
-                    )}
-                  </Typography>
-                  <Typography variant="body2" sx={{ opacity: 0.9, textAlign: 'left' }}>{user.department}</Typography>
-                  <Typography variant="body2" sx={{ opacity: 0.8, textAlign: 'left' }}>{user.batch}</Typography>
-                  <Box mb={6} display="flex" justifyContent="center" gap={2}>
-                    <Button
-                      variant="contained"
-                      sx={{
-                        backgroundColor: "#fff",
-                        color: "#000",
-                        textTransform: "none",
-                        fontWeight: "bold",
-                        "&:hover": { backgroundColor: "#f0f0f0" },
-                      }}
-                      onClick={() => handleOpenModal(user)}
-                    >
-                      Connect
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      sx={{
-                        color: "#fff",
-                        borderColor: "#fff",
-                        textTransform: "none",
-                        fontWeight: "bold",
-                        "&:hover": {
-                          backgroundColor: "rgba(255,255,255,0.1)",
-                        },
-                      }}
-                      onClick={()=>{
-                        navigate(`/publicprofile/${user._id}`)
-                      }}
-                    >
-                      View
-                    </Button>
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      width: "100%",
+                      height: "100%",
+                      backdropFilter: "blur(2px)",
+                      background: "linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.3))",
+                      color: "#fff",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "flex-end",
+                      p: 3,
+                    }}
+                  >
+                    <Typography variant="h6" fontWeight="bold" sx={{ display: "flex", alignItems: "flex-start" }}>
+                      {user.name}
+                      {user.verified ? (
+                        <Verified fontSize="small" sx={{ ml: 1, color: "lightblue" }} />
+                      ) : (
+                        <Pending fontSize="small" sx={{ ml: 1 }} />
+                      )}
+                    </Typography>
+                    <Typography variant="body2" sx={{ opacity: 0.9, textAlign: 'left' }}>{user.department}</Typography>
+                    <Typography variant="body2" sx={{ opacity: 0.8, textAlign: 'left' }}>{user.batch}</Typography>
+                    <Box mb={6} display="flex" justifyContent="center" gap={2}>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          backgroundColor: "#fff",
+                          color: "#000",
+                          textTransform: "none",
+                          fontWeight: "bold",
+                          "&:hover": { backgroundColor: "#f0f0f0" },
+                        }}
+                        onClick={() => handleOpenModal(user)}
+                      >
+                        Connect
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        sx={{
+                          color: "#fff",
+                          borderColor: "#fff",
+                          textTransform: "none",
+                          fontWeight: "bold",
+                          "&:hover": {
+                            backgroundColor: "rgba(255,255,255,0.1)",
+                          },
+                        }}
+                        onClick={()=>{
+                          navigate(`/publicprofile/${user._id}`)
+                        }}
+                      >
+                        View
+                      </Button>
+                    </Box>
                   </Box>
                 </Box>
-              </Box>
-            </motion.div>
-          </Grid>
-        ))}
-      </Grid>
+              </motion.div>
+            </Grid>
+          ))}
+        </Grid>
+      </InfiniteScroll>
 
+      {/* Friend Request Modal */}
       <Dialog open={openModal} onClose={handleCloseModal} fullWidth maxWidth="xs">
         <DialogTitle textAlign="center" fontWeight="bold">Send Friend Request</DialogTitle>
         <DialogContent dividers>

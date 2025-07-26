@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { searchresults } from '../../features/Search/searchPeopleSlice';
+import { searchresults } from '../../redux/slice/searchPeopleSlice';
 import {
   Box,
   Typography,

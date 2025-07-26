@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { acceptFriendRequest, fetchMyList, getfriendinviteslist } from '../../features/friends/friendsSlice';
+import { acceptFriendRequest, fetchMyList, getfriendinviteslist } from '../../redux/slice/friendsSlice';
 import {
   Box,
   Grid,
@@ -14,9 +14,8 @@ import { motion } from 'framer-motion';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import PersonRemoveAlt1Icon from '@mui/icons-material/PersonRemoveAlt1';
 import PeopleSuggestions from '../suggestions/PeopleSuggestions';
-import { getAuth } from '../../features/users/AuthSlice';
+import { getAuth } from '../../redux/slice/AuthSlice';
 import { SentimentDissatisfiedOutlined } from '@mui/icons-material';
-import SuggestionContainer from '../suggestions/SuggestionContainer';
 
 const MyInvites = () => {
   const invitesList = useSelector(getfriendinviteslist);
@@ -26,7 +25,7 @@ const MyInvites = () => {
   useEffect(()=>{
     dispatch(fetchMyList(auth.user.email));
   },[dispatch])
-  if(invitesList.length===0){
+  if(invitesList?.length===0 && !isLoading){
     return(<Box sx={{ textAlign: "center", mt: 10 }}>
             <SentimentDissatisfiedOutlined sx={{ fontSize: 80, color: "#ccc" }} />
             <Typography variant="h6" fontWeight="bold" sx={{ mt: 2 }}>

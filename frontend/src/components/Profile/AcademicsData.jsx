@@ -1,125 +1,171 @@
-import { AddCircleOutline, Edit, School } from '@mui/icons-material';
-import { Box, Button, IconButton, Paper, TextField, Typography } from '@mui/material';
-import React, { useRef, useState } from 'react'
-import {motion} from 'framer-motion'
-function AcademicsData({user}) {
-    
-      const [isEditingEducation, setIsEditingEducation] = useState(false);
-      const [educationData, setEducationData] = useState({
-        school: user.education?.school || "",
-        degree: user.education?.degree || "",
-        field: user.education?.field || "",
-        startYear: user.education?.startYear || "",
-        endYear: user.education?.endYear || "",
-      });
-      
-      
+import React, { useEffect, useState } from 'react';
+import {
+  Box,
+  Typography,
+  IconButton,
+  TextField,
+  Paper,
+  Button,
+  Avatar,
+  Stack,
+} from '@mui/material';
+import SchoolIcon from '@mui/icons-material/School';
+import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from '@mui/icons-material/Add';
+import CancelIcon from '@mui/icons-material/Close';
+import SaveIcon from '@mui/icons-material/Check';
+
+function AcademicsData({ user }) {
+  const [educationList, setEducationList] = useState(user?.education || []);
+  const [isEditing, setIsEditing] = useState(false);
+  const [newEducation, setNewEducation] = useState({
+    institution: '',
+    degree: '',
+    from: '',
+    to: '',
+  });
+
+  useEffect(()=>{
+    setEducationList(user?.education||[])
+  },[user])
+
+  const handleAddEducation = () => {
+    if (
+      !newEducation.institution.trim() ||
+      !newEducation.degree.trim() ||
+      !newEducation.from ||
+      !newEducation.to
+    )
+      return;
+
+    const updatedList = [...educationList, newEducation];
+    setEducationList(updatedList);
+    setNewEducation({ institution: '', degree: '', from: '', to: '' });
+    setIsEditing(false);
+  };
+
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
-      <Paper sx={{ p: 3, borderRadius: "8px" }}>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
-          <Typography variant="h6" sx={{ fontWeight: "bold" }}>Education</Typography>
-          <IconButton onClick={() => setIsEditingEducation(!isEditingEducation)}>
-            <Edit fontSize="small" />
-          </IconButton>
-        </Box>
-        
-        {isEditingEducation ? (
-          <Box component="form" onSubmit={(e) => {
-            e.preventDefault();
-            console.log("Updated Education Data:", educationData);
-            //dispatch(updateUserEducation(educationData));
-            setIsEditingEducation(false);
-          }}>
-            <TextField
-              fullWidth
-              label="School"
-              value={educationData.school}
-              onChange={(e) => setEducationData({ ...educationData, school: e.target.value })}
-              margin="normal"
-            />
-            <TextField
-              fullWidth
-              label="Degree"
-              value={educationData.degree}
-              onChange={(e) => setEducationData({ ...educationData, degree: e.target.value })}
-              margin="normal"
-            />
-            <TextField
-              fullWidth
-              label="Field of Study"
-              value={educationData.field}
-              onChange={(e) => setEducationData({ ...educationData, field: e.target.value })}
-              margin="normal"
-            />
-            <Box sx={{ display: 'flex', gap: 2, mt: 1, mb: 2 }}>
-              <TextField
-                label="Start Year"
-                type="date"
-                value={educationData.startYear}
-                onChange={(e) => setEducationData({ ...educationData, startYear: e.target.value })}
-                margin="normal"
-                InputLabelProps={{ shrink: true }}
-              />
-              <TextField
-                label="End Year"
-                type="date"
-                value={educationData.endYear}
-                onChange={(e) => setEducationData({ ...educationData, endYear: e.target.value })}
-                margin="normal"
-                InputLabelProps={{ shrink: true }}
-              />
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
-              <Button variant="outlined" onClick={() => setIsEditingEducation(false)}>
-                Cancel
-              </Button>
-              <Button variant="contained" type="submit">
-                Save
-              </Button>
+    <Paper elevation={3} sx={{ p: 3, borderRadius: 3, alignItems: 'flex-start' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+        <Typography variant="h6" fontWeight={600}>
+          Education
+        </Typography>
+        <IconButton onClick={() => setIsEditing(!isEditing)}>
+          <EditIcon />
+        </IconButton>
+      </Box>
+      <Stack spacing={4} sx={{ borderLeft: '3px solid #1976d2', pl: 3 }}>
+        {educationList.map((edu, index) => (
+          <Box key={index} sx={{ position: 'relative', textAlign:"left" }}>
+            <Avatar
+              sx={{
+                bgcolor: '#1976d2',
+                position: 'absolute',
+                left: '-36px',
+                top: 0,
+                width: 24,
+                height: 24,
+              }}
+            >
+              <SchoolIcon sx={{ fontSize: 16 }} />
+            </Avatar>
+
+            <Box
+              sx={{
+                p: 2,
+                backgroundColor: '#f9f9f9',
+                borderRadius: 2,
+                boxShadow: 1,
+              }}
+            >
+              <Typography variant="subtitle1" fontWeight="bold">
+                {edu.institution}
+              </Typography>
+              <Typography variant="body2" sx={{ mb: 0.5 }} color="text.secondary">
+                {edu.degree}
+              </Typography>
+              <Typography variant="caption" color="text.secondary">
+                {new Date(edu.from).toLocaleDateString()} - {new Date(edu.to).toLocaleDateString()}
+              </Typography>
             </Box>
           </Box>
-        ) : (
-          <>
-            {user.education ? (
-              <Box sx={{ display: "flex", alignItems: "flex-start", mb: 2 }}>
-                <School fontSize="large" sx={{ mr: 2, color: "#0077B5" }} />
-                <Box>
-                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-                    {user.education.school || "University Name"}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {user.education.degree || "Degree"} • {user.education.field || "Field of Study"}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {user.education.startYear || "20XX"} - {user.education.endYear || "20XX"}
-                  </Typography>
-                </Box>
-              </Box>
-            ) : (
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <School fontSize="small" sx={{ mr: 1 }} />
-                <Typography variant="body1">No education details added.</Typography>
-              </Box>
-            )}
-            
+        ))}
+      </Stack>
+
+      {/* Add New Entry */}
+      {isEditing && (
+        <Box component="form" onSubmit={(e) => e.preventDefault()} sx={{ mt: 4 }}>
+          <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 2 }}>
+            Add Education
+          </Typography>
+
+          <TextField
+            fullWidth
+            label="Institution"
+            value={newEducation.institution}
+            onChange={(e) => setNewEducation({ ...newEducation, institution: e.target.value })}
+            margin="dense"
+          />
+          <TextField
+            fullWidth
+            label="Degree"
+            value={newEducation.degree}
+            onChange={(e) => setNewEducation({ ...newEducation, degree: e.target.value })}
+            margin="dense"
+          />
+          <Box sx={{ display: 'flex', gap: 2, mt: 2 }}>
+            <TextField
+              label="From"
+              type="date"
+              InputLabelProps={{ shrink: true }}
+              fullWidth
+              value={newEducation.from}
+              onChange={(e) => setNewEducation({ ...newEducation, from: e.target.value })}
+            />
+            <TextField
+              label="To"
+              type="date"
+              InputLabelProps={{ shrink: true }}
+              fullWidth
+              value={newEducation.to}
+              onChange={(e) => setNewEducation({ ...newEducation, to: e.target.value })}
+            />
+          </Box>
+
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, mt: 3 }}>
             <Button
-              startIcon={<AddCircleOutline />} 
-              variant="outlined" 
-              sx={{ mt: 2 }}
-              onClick={() => setIsEditingEducation(true)}
+              variant="outlined"
+              startIcon={<CancelIcon />}
+              onClick={() => {
+                setIsEditing(false);
+                setNewEducation({ institution: '', degree: '', from: '', to: '' });
+              }}
             >
-              Add education
+              Cancel
             </Button>
-          </>
-        )}
-      </Paper>
-    </motion.div>
-  )
+            <Button
+              variant="contained"
+              startIcon={<SaveIcon />}
+              onClick={handleAddEducation}
+            >
+              Save
+            </Button>
+          </Box>
+        </Box>
+      )}
+
+      {!isEditing && (
+        <Button
+          startIcon={<AddIcon />}
+          variant="text"
+          sx={{ mt: 3 }}
+          onClick={() => setIsEditing(true)}
+        >
+          Add Education
+        </Button>
+      )}
+    </Paper>
+  );
 }
 
-export default AcademicsData
+export default AcademicsData;

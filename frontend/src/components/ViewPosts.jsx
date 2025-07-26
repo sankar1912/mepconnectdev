@@ -14,8 +14,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   addComment, addLike, displayPost, getPost, removeLike
-} from "../features/feeds/postsSlice";
-import { getAuth } from "../features/users/AuthSlice";
+} from "../redux/slice/postsSlice";
+import { getAuth } from "../redux/slice/AuthSlice";
 import SuggestionContainer from "./suggestions/SuggestionContainer";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";

@@ -11,7 +11,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { useDispatch, useSelector } from "react-redux";
-import { getAuth, logOutRequest } from "../features/users/AuthSlice";
+import { getAuth, logOutRequest } from "../redux/slice/AuthSlice";
 import { useNavigate } from "react-router-dom";
 import {
   ExploreOutlined,

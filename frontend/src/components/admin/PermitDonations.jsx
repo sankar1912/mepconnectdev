@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDonationsPermit, getDonationsPermit, updateDonationFailure, updateDonationSuccess } from "../../features/admin/permitSlice";
+import { fetchDonationsPermit, getDonationsPermit, updateDonationFailure, updateDonationSuccess } from "../../redux/slice/permitSlice";
 import {
   Avatar,
   Box,

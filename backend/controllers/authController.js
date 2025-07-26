@@ -62,7 +62,7 @@ exports.logoutUser = async (req, res) => {
 
 
   exports.registerUser = async (req, res) => {
-    const { name, email, password, batch, degree, department, place, profileImage } = req.body;
+    const { name, email, password, batch, degree, department, place, profileImage, phone, dob, father, mother, education=[], experience=[] } = req.body;
   
     try {
       const existingUser = await User.findOne({ email });
@@ -70,10 +70,7 @@ exports.logoutUser = async (req, res) => {
         return res.status(400).json({ message: "Email already in use" });
       }
   
-      // Generate salt for password hashing
       const salt = crypto.randomBytes(16).toString("hex");
-  
-      // Hash the password using SHA-512 + salt
       const hash = crypto.createHash("sha512");
       hash.update(salt + password); // Concatenate salt and password before hashing
       const hashedPassword = hash.digest("hex");
@@ -90,6 +87,12 @@ exports.logoutUser = async (req, res) => {
         department,
         place,
         profileImage,
+        phone,
+        dob,
+        father,
+        mother,
+        experience,
+        education,
       });
   
       // Save the new user to the database

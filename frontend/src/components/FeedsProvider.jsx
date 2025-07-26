@@ -2,7 +2,7 @@ import { Box, Grid} from '@mui/material'
 import React from 'react'
 import Writeposts from './Writeposts'
 import { useSelector } from 'react-redux'
-import { getAuth } from '../features/users/AuthSlice'
+import { getAuth } from '../redux/slice/AuthSlice'
 import { Card } from '@mui/joy'
 import FeedContainer from './FeedContainer'
 const FeedsProvider = () => {

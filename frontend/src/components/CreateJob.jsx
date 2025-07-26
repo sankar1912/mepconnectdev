@@ -31,8 +31,8 @@ import {
 } from "@mui/icons-material";
 import useCloudinaryImage from "./hooks/useCloudinaryImage";
 import { useDispatch, useSelector } from "react-redux";
-import { getAuth } from "../features/users/AuthSlice";
-import { registerJobs } from "../features/feeds/jobsSlice";
+import { getAuth } from "../redux/slice/AuthSlice";
+import { registerJobs } from "../redux/slice/jobsSlice";
 
 const steps = [
   { label: "Job Details", icon: <WorkIcon /> },

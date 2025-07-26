@@ -1,6 +1,6 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
-import { loadUserRequest } from "./features/users/AuthSlice";
+import { getAuth, loadUserRequest } from "./redux/slice/AuthSlice";
 
 import Header from "./components/Header";
 import { Route, Routes } from "react-router-dom";
@@ -35,11 +35,17 @@ import JobApplication from "./components/JobApplication";
 import AdminRoute from "./components/route/AdminRoute";
 import JobTracker from "./components/searchJobs/JobTracker";
 import useShare from "./components/hooks/useShare";
+import TourContainer from "./components/tour/TourContainer";
+import ManageUser from "./components/tour/ManageUser";
+import VerifyUser from "./components/VerifyUser";
 
 
 function App() {
   const dispatch = useDispatch();
   const [start,setStart]=useState(false);
+ 
+  const {isLoading} =useSelector(getAuth);
+   const [open, setOpen]= useState(isLoading);
   useEffect(() => {
     dispatch(loadUserRequest());
   }, [dispatch]);
@@ -55,6 +61,7 @@ function App() {
         start ?(<>
         <Header />
           <div style={{marginTop:'5%'}}>
+            
           <Routes>
             <Route path="/" element={<Service/>} />
             <Route path="/login" element={<AuthContainer/>}/> 
@@ -69,7 +76,7 @@ function App() {
             <Route path="/publicprofile/:_id" element={<PublicProfile/>}/>
             <Route path="/user/forgotpassword" element={<ForgotPassword/>}/>
             <Route path="/request/resetpassword/:token" element={<ResetPassword/>}/>
-            
+            <Route path="/new/user/verification" element={<ManageUser/>}/>
             <Route path ="/jobs" element={<JobPage/>}/>
             <Route path ="/job/view/:_id" element={<ViewJob show={show}/>}/>
             <Route path="/searchfriends" element={<SearchFriends />}/>
@@ -78,11 +85,11 @@ function App() {
             <Route path="/jobs/applied" element={<ProtectedRoute><JobPage option={2}/></ProtectedRoute>}/>
             <Route path="/job/apply/:_id" element={<ProtectedRoute><JobApplication/></ProtectedRoute>}/>
             <Route path ="/job/track/:_id" element={<ProtectedRoute><JobTracker/></ProtectedRoute>}/>
-
-
             <Route path="/payment/checkout" element={<PaymentRoute><CheckOut/></PaymentRoute>}/>
             <Route path="/payment/redirect/success" element={<WebhookRoute><SuccessPage/></WebhookRoute>}/>
 
+
+            <Route path="/user/verify/:id" element={<VerifyUser/>} />
 
             <Route path ="/profile/payments" element={<ProtectedRoute><UserTransactions/></ProtectedRoute>}/>
 

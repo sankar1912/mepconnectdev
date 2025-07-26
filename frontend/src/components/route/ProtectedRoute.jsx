@@ -1,5 +1,5 @@
 import React from 'react'
-import { getAuth } from '../../features/users/AuthSlice';
+import { getAuth } from '../../redux/slice/AuthSlice';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 

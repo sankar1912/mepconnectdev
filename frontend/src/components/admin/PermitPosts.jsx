@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import {  fetchPostsPermit, getPostsPermit, updatePostPermitFailure, updatePostPermitSuccess } from "../../features/admin/permitSlice";
+import {  fetchPostsPermit, getPostsPermit, updatePostPermitFailure, updatePostPermitSuccess } from "../../redux/slice/permitSlice";
 
 function PermitPosts() {
   const permit = useSelector(getPostsPermit) || {}; 
