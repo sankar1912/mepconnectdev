@@ -23,6 +23,7 @@ const MotionBox = motion(Box);
 function ManageUser() {
   const [regUser, setRegUser] = useState(null);
   const [emailInputs, setEmailInputs] = useState('');
+  const isValidEmail = regUser?.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(regUser.email);
 
   useEffect(() => {
     try {
@@ -45,7 +46,6 @@ function ManageUser() {
 
   console.log(`Submitted for user: ${user.name}, email: ${enteredEmail}`);
 
-  // Ensure user.email is set correctly before sending
   const updatedUser = {
     ...user,
     email: enteredEmail,
@@ -114,12 +114,12 @@ function ManageUser() {
               </Grid>
 
               <Grid item xs={12}>
-                {regUser.email !== 'Not provided'|| regUser.email!=="" ? (
+                {isValidEmail? (
                   <>
                     <Typography
                       sx={{ fontSize: 14, color: 'primary.main', mb: 2 }}
                     >
-                      You will receive the password to this registered email.
+                      You will receive the mail to this registered email.
                     </Typography>
                     <Button
                       variant="contained"

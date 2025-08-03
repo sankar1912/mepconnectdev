@@ -43,9 +43,9 @@ export const fetchMyList=(email)=>async(dispatch,getState)=>{
     dispatch(setFriendsListSuccess(details.data.result));
 }
 
-export const sendFriendequest=(friendId)=>async(dispatch,getState)=>{
+export const sendFriendequest=(friendEmail,note )=>async(dispatch,getState)=>{
     const {auth}=getAuth(getState());
-    await axios.post('/api/v1/friends/addfriend',{userId:auth.user.email,friendUserId:friendId});
+    await axios.post('/api/v1/friends/addfriend',{emailId:auth.user.email,friendemailId:friendEmail, note:note});
 }
 
 export const acceptFriendRequest=(userId,friendId)=>async(dispatch,getState)=>{

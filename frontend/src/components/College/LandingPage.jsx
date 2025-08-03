@@ -193,7 +193,7 @@ const LandingPage = ({ setStart }) => {
             borderRadius: "25px",
           }}
         >
-          <source src="/Assets/vid/intro.mp4" type="video/mp4" />
+          <source src="/Assets/vid/clgvid.mp4" type="video/mp4" />
         </video>
 
         <section>

@@ -39,10 +39,10 @@ const fetchList = async (req, res) => {
 
 
 const addFriend = async (req, res) => {
-  const { userId, friendUserId } = req.body;
+  const { emailId, friendemailId, note } = req.body;
   try {
-    const user = await Friend.findOne({ email: userId });
-    const friend = await Friend.findOne({ email: friendUserId });
+    const user = await Friend.findOne({ email: emailId });
+    const friend = await Friend.findOne({ email: friendemailId });
     if (!user || !friend) {
       return res
         .status(404)
@@ -53,11 +53,11 @@ const addFriend = async (req, res) => {
         .status(400)
         .json({ message: "Friend request already sent", success: true });
     }
-    const myuser=await User.findOne({email:userId});
+    const myuser=await User.findOne({email:emailId});
     friend.friendinvites.push(myuser._id);
     await friend.save();
-    const sender = await User.findOne({ email: userId });
-    await sendFriendRequestEmail(friend.email, user.name, sender);
+    const sender = await User.findOne({ email: emailId });
+    await sendFriendRequestEmail(friend.email, user.name, sender, note);
 
     res
       .status(200)
@@ -92,7 +92,7 @@ const acceptFriend = async (req, res) => {
       if (!friend.friends.includes(userId)) friend.friends.push(userId);
 
       user.friendinvites = user.friendinvites.filter(id => id.toString() !== friendId);
-
+      friend.friendinvites = friend.friendinvites.filter(id => id.toString() !== userId);
       await user.save();
       await friend.save();
 

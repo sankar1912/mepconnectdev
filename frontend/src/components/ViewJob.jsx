@@ -320,7 +320,7 @@ if (!job || !job.title) {
               Login to Apply
             </Button></Box>):(<Box mt={4} textAlign="center">
            {
-             (auth.user.applications.length >0 && auth.user.applications.includes(job._id)) ?(
+             (auth?.user?.applications?.length >0 && auth?.user?.applications?.includes(job?._id)) ?(
             <>
              <Button
               variant="contained"
