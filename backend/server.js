@@ -3,7 +3,6 @@ const connectDb=require('./config/database')
 connectDb();
 const server=app.listen(process.env.PORT,()=>{
     console.log(`Server running in the port:${process.env.PORT} in ${process.env.NODE_ENV}`)
-
 })
 
 process.on('unhandledRejection',(err)=>

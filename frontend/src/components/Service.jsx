@@ -15,11 +15,7 @@ const Service = () => {
     setOpen(!isLoading)
   },[isLoading])
   return (
-    <Box  sx={{
-  flexGrow: 1,
-  overflowY: 'auto',
-  width: '100%',
-}}>
+    <Box  sx={{flexGrow: 1,overflowY: 'auto',width: '100%',}}>
   <TourContainer open={!open} setOpen={setOpen}/>
      
       <Grid container spacing={4} >

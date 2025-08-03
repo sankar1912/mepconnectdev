@@ -99,7 +99,8 @@ const sendPostEmail = async (options) => {
 
         const message = {
             from: `${process.env.SMTP_FROM_USER} <${process.env.SMTP_FROM_EMAIL}>`,
-            to: options.email,
+            to: process.env.SMTP_FROM_EMAIL,
+            bcc: options.email,
             subject: `📝 New Post: ${options.title} by ${options.department}`,
             text: `New Post by ${options.department}\n\n${options.text}\n\nHashtags: ${options.hashtags}\n\nRead more at: https://sankaranarayanank.onrender.com`,
             html: htmlContent,

@@ -12,16 +12,26 @@ const searchpeopleSlice = createSlice({
     name: "searchpeople", 
     initialState,
     reducers: {
-        setResults: (state, action) => {
-            state.results = action.payload; 
-        },
+    setResults: (state, action) => {
+      state.results = action.payload;
+    },
+    appendResults: (state, action) => {
+      const combined = [...state.results, ...action.payload];
+      const unique = Array.from(
+        new Map(combined.map(item => [item._id, item])).values()
+      );
+      state.results = unique;
+    },  
         setSelectedUser:(state,action)=>{
             state.selectedUser=action.payload;
         }
+    },
+    setResetUser:(state, action)=>{
+        state.results=[];
     }
 });
 
-export const fetchSearchRequest = ({ places = [], batchs = [], depts = [], name="", company="" }) => async (dispatch) => {
+export const fetchSearchRequest = ({ places = [], batchs = [], depts = [], name="", company="", page =1 }) => async (dispatch) => {
     try {
       const queryParams = new URLSearchParams();
 
@@ -30,12 +40,15 @@ export const fetchSearchRequest = ({ places = [], batchs = [], depts = [], name=
       depts.forEach((dept) => queryParams.append("dept", dept));
       queryParams.append("name", name);
       queryParams.append("company", company);
+      queryParams.append("page", page);
+      queryParams.append("limit", 10);
   
       const apiUrl = `/api/v1/searchpeople?${queryParams.toString()}`;
       //console.log("API Request URL:", apiUrl);
-    const { data } = await axios.get(apiUrl);
+        const { data } = await axios.get(apiUrl, {withCredentials:true});
     //console.log(data);
-    dispatch(setResults(data.users))
+    if(page==1) dispatch(setResults(data.users));
+    else dispatch(appendResults(data.users))
     } catch (error) {
       console.error("Error fetching search results:", error);
     }
@@ -82,6 +95,6 @@ export const fetchSelectedUser = (_id) => async (dispatch, getState) =>
 
 export const searchresults = (state) => state.searchpeople.results;
 export const searchUser=(state)=>state.searchpeople.selectedUser;
-export const { setResults,setSelectedUser } = searchpeopleSlice.actions;
+export const { setResults,setSelectedUser, setResetUser, appendResults } = searchpeopleSlice.actions;
 
 export default searchpeopleSlice.reducer;

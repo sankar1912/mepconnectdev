@@ -12,7 +12,6 @@ const jobApplicationSchema = new mongoose.Schema({
   additionalInfo: { type: String, trim: true },
   resume: { type: String, required: true, trim: true },
   status:{type:Boolean,default:false},
-  createdAt: { type: Date, default: Date.now }
-});
+},{timestamps: true});
 
 module.exports = mongoose.model('JobApplications', jobApplicationSchema);

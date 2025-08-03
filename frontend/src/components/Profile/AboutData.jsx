@@ -19,7 +19,7 @@ const PersonalDetails = ({ user }) => {
         borderRadius: 5,
         background: 'linear-gradient(to bottom right, #e3f2fd, #ffffff)',
         boxShadow: 3,
-        width:"100%",
+        width:"95%",
         mx: 'auto',
       }}
     >

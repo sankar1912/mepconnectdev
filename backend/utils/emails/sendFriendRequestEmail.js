@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-const sendFriendRequestEmail = async (toEmail, requesterName, user) => {
+const sendFriendRequestEmail = async (toEmail, requesterName, user, note) => {
     const transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST,
         port: process.env.SMTP_PORT,
@@ -27,7 +27,7 @@ const sendFriendRequestEmail = async (toEmail, requesterName, user) => {
                         <p style="margin: 2px 0; color: #777;">🏠 ${user.place}</p>
                     </div>
                 </div>
-
+                <p style="margin-top: 20px; font-size: 16px; color: #555;">${note ? `Note: ${note}` : 'No additional message.'}</p>
                 <div style="margin: 30px 0; text-align: center;">
                     <a href="${process.env.FRONTEND_URI}" style="background-color: #0073b1; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px;">
                         View Request & Connect

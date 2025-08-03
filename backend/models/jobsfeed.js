@@ -20,6 +20,6 @@ const jobsSchema = new mongoose.Schema({
     default: []
   }],
   verified:{type:Boolean, required:false, default:false}
-});
+},{timestamps: true});
 
 module.exports = mongoose.model("Jobs", jobsSchema);
