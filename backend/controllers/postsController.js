@@ -4,7 +4,8 @@ const Post = require("../models/postsfeed");
 const sendEmail = require("../utils/email");
 const user = require("../models/user");
 const postsfeed = require("../models/postsfeed");
-const addNewPost = async (req, res) => {
+const catchAsyncError = require("../middlewares/catchAsyncError");
+const addNewPost = catchAsyncError(async (req, res) => {
   try {
     const { name, username, department, time, text, media, hashtags,email } =
       req.body;
@@ -48,9 +49,9 @@ const addNewPost = async (req, res) => {
     console.error("Error saving post:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
-};
+})
 
-const addPostLike = async (req, res) => {
+const addPostLike = catchAsyncError(async (req, res) => {
 
   const { email,timestamp } = req.body;
   const { _id } = req.params;
@@ -85,9 +86,9 @@ const addPostLike = async (req, res) => {
       error: err.message,
     });
   }
-};
+})
 
-const removePostLike = async (req, res) => {
+const removePostLike = catchAsyncError(async (req, res) => {
 
   const { email} = req.body;
   const { _id } = req.params;
@@ -123,9 +124,8 @@ const removePostLike = async (req, res) => {
       error: err.message,
     });
   }
-};
-
-const getPostByName=async(req,res)=>{
+})
+const getPostByName=catchAsyncError(async(req,res)=>{
   try{
     const {_id}=req.params;
     const Post=await postsfeed.find({_id:_id});
@@ -153,9 +153,9 @@ const getPostByName=async(req,res)=>{
       success:false
     })
   }
-}
+})
 
-const getPostsByDepartment = async (req, res) => {
+const getPostsByDepartment = catchAsyncError(async (req, res) => {
   try {
     const { page = 1, limit = 10 } = req.query;
     const skip = (parseInt(page) - 1) * parseInt(limit);
@@ -215,7 +215,8 @@ const getPostsByDepartment = async (req, res) => {
       status: "error",
     });
   }
-};
+}
+)
 
 
 

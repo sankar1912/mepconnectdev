@@ -7,21 +7,21 @@ const { addDonation, getAllDonations, getSingleDonations } = require('../control
 const router=express.Router();
 
 //events
-router.post('/addnewevent',addnewevent);
-router.get('/getevents/:department', getEventsByDepartment);
+router.post('/feeds/addnewevent',addnewevent);
+router.get('/feeds/getevents/:department', getEventsByDepartment);
 
 
 //posts
-router.post('/addnewpost',addNewPost);
-router.get('/getposts/:department',getPostsByDepartment)
+router.post('/feeds/addnewpost',addNewPost);
+router.get('/feeds/getposts/:department',getPostsByDepartment)
 
-router.get('/getpost/:_id',getPostByName);
-router.post('/posts/addlike/:_id',addPostLike);
-router.post('/posts/removelike/:_id',removePostLike);
+router.get('/feeds/getpost/:_id',getPostByName);
+router.post('/feeds/posts/addlike/:_id',addPostLike);
+router.post('/feeds/posts/removelike/:_id',removePostLike);
 
 //donations
-router.post('/adddonations',addDonation);
-router.get('/donations',getAllDonations);
-router.get('/donation/:id',getSingleDonations);
+router.post('/feeds/adddonations',addDonation);
+router.get('/feeds/donations',getAllDonations);
+router.get('/feeds/donation/:id',getSingleDonations);
 
 module.exports=router

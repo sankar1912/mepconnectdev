@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 const { isLowercase } = require("validator");
 
+const commentSchema = new mongoose.Schema({
+  id: {type:mongoose.Schema.Types.ObjectId, ref:"user"},
+  message:{type:String, default:""}
+}, {timestamps:true})
+
 const postSchema = new mongoose.Schema(
   {
     id: { type: Number, required: true, unique: true },
@@ -10,7 +15,7 @@ const postSchema = new mongoose.Schema(
     time: { type: String, required: true },
     text: { type: String, required: true },
     likes: { type: Number, default: 0 },
-    comments: { type: [String], default: [] },
+    comments: { type: [commentSchema], default: [] },
     shares: { type: Number, default: 0 },
     media: { type: [String], default: [] }, 
     hashtags: { type: [String], default: [] },

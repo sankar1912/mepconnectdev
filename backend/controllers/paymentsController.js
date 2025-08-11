@@ -5,8 +5,9 @@ const Transactions = require("../models/transactions");
 const donations = require("../models/donations");
 const user = require("../models/user");
 const e = require("express");
+const catchAsyncError = require("../middlewares/catchAsyncError");
 
-const createOrder = async (req, res) => {
+const createOrder = catchAsyncError(async (req, res) => {
   const { amount, currency = "INR", receipt } = req.body;
   try {
     const options = {
@@ -27,9 +28,9 @@ const createOrder = async (req, res) => {
       .status(500)
       .json({ error: "Failed to create order", order: [], success: false });
   }
-};
+})
 
-const storeTransaction = async (req, res) => {
+const storeTransaction = catchAsyncError(async (req, res) => {
   //console.log(req.body);
   try {
     const {
@@ -97,9 +98,9 @@ const storeTransaction = async (req, res) => {
       success: false,
     });
   }
-};
+})
 
-const checkTransaction = async (req, res) => {
+const checkTransaction = catchAsyncError(async (req, res) => {
   const { donation_id, user_id, razorpay_order_id } = req.body;
 
   const userDoc = await user.findById(user_id);
@@ -120,10 +121,10 @@ const checkTransaction = async (req, res) => {
       success: true,
     });
   }
-};
+})
 
 
-const getAllTransactions = async (req, res) => {
+const getAllTransactions = catchAsyncError(async (req, res) => {
     const {user_id}= req.params;
   if(user_id){
     try {
@@ -179,6 +180,6 @@ const getAllTransactions = async (req, res) => {
       success: false,
     });
   }
-};
+})
 
 module.exports = { createOrder, storeTransaction, checkTransaction,getAllTransactions };

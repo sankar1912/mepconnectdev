@@ -4,9 +4,10 @@ const Post = require("../models/postsfeed");
 const sendEmail = require("../utils/email");
 const user = require("../models/user");
 const postsfeed = require("../models/postsfeed");
+const catchAsyncError = require("../middlewares/catchAsyncError");
 
 
-const addDonation = async (req, res) => {
+const addDonation = catchAsyncError(async (req, res) => {
   try {
     const {
       campaignName,
@@ -51,9 +52,9 @@ const addDonation = async (req, res) => {
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
-};
+})
 
-const getAllDonations = async (req, res) => {
+const getAllDonations = catchAsyncError(async (req, res) => {
   try {
     const donation = await donations.find({verified:true});
     res.status(200).json({ success: true, donations: donation });
@@ -64,9 +65,9 @@ const getAllDonations = async (req, res) => {
       donations: [],
     });
   }
-};
+})
 
-const getSingleDonations = async (req, res) => {
+const getSingleDonations = catchAsyncError(async (req, res) => {
   const { id } = req.params;
   try {
     const donation = await donations.find({ _id: id });
@@ -90,6 +91,6 @@ const getSingleDonations = async (req, res) => {
       donations: [],
     });
   }
-};
+})
 
 module.exports={addDonation, getSingleDonations,getAllDonations}

@@ -2,8 +2,9 @@ const Event = require("../models/eventsfeed");
 const Job = require("../models/jobsfeed");
 const User = require("../models/user");
 const sendMonthlyFeedEmail = require("../utils/emails/monthlyFeedsEmail");
-const Post = require("../models/postsfeed")
-const sendMonthlyReport = async (req, res) => {
+const Post = require("../models/postsfeed");
+const catchAsyncError = require("../middlewares/catchAsyncError");
+const sendMonthlyReport = catchAsyncError(async (req, res) => {
     try {
         const oneMonthAgo = new Date();
         oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
@@ -27,6 +28,6 @@ const sendMonthlyReport = async (req, res) => {
     } catch (error) {
         console.error(error);
     }
-};
+})
 
 module.exports = { sendMonthlyReport };

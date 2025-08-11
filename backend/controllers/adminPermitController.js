@@ -10,6 +10,7 @@ const jobsfeed = require("../models/jobsfeed");
 
 const {sendDonationEmailVerified, sendDonationEmailRemoved} = require('../utils/emails/verifyDonation');
 const { sendJobEmailVerified } = require("../utils/emails/sendJobEmail");
+const catchAsyncError = require("../middlewares/catchAsyncError");
 
 const models = {
   users: require("../models/user"),
@@ -19,7 +20,7 @@ const models = {
   jobs:require("../models/jobsfeed")
 };
 
-const fetchPermit = async (req, res) => {
+const fetchPermit =catchAsyncError( async (req, res) => {
   try {
     const { fetchData, dept } = req.body;
 
@@ -55,10 +56,10 @@ const fetchPermit = async (req, res) => {
     console.error("Error fetching permit data:", error);
     res.status(500).json({ message: "Server Error" });
   }
-};
+})
 
 //Users verification
-const updateUserVerified = async (req, res) => {
+const updateUserVerified = catchAsyncError(async (req, res) => {
   try {
     const { email } = req.body;
 
@@ -78,8 +79,8 @@ const updateUserVerified = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: "Internal Server Error",success:false });
   }
-};
-const updateUserRemoved = async (req, res) => {
+})
+const updateUserRemoved = catchAsyncError(async (req, res) => {
   try {
     const { email } = req.body;
 
@@ -99,11 +100,11 @@ const updateUserRemoved = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: "Internal Server Error",success:false });
   }
-};
+})
 
 
 //Posts Update
-const updatePostVerified = async (req, res) => {
+const updatePostVerified = catchAsyncError(async (req, res) => {
   try {
     const { email, id } = req.body;
 
@@ -140,11 +141,10 @@ const updatePostVerified = async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Internal server error", success: false });
   }
-};
+})
 
 
-
-const updatePostRemoved=async(req,res)=>{
+const updatePostRemoved=catchAsyncError(async(req,res)=>{
   try{
     const {email,id}=req.body;
 
@@ -169,10 +169,10 @@ const updatePostRemoved=async(req,res)=>{
   }catch(err){
     res.status(500).json({mesage:"Internal server error",success:false});
   }
-}
+})
 
 //Events Verification
-const updateEventVerified = async (req, res) => {
+const updateEventVerified = catchAsyncError(async (req, res) => {
   try {
     const { email, id } = req.body;
 
@@ -208,11 +208,9 @@ const updateEventVerified = async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Internal server error", success: false });
   }
-};
+})
 
-
-
-const updateEventRemoved=async(req,res)=>{
+const updateEventRemoved=catchAsyncError(async(req,res)=>{
   try{
     const {email,id}=req.body;
   if (!email) {
@@ -235,11 +233,11 @@ const updateEventRemoved=async(req,res)=>{
     res.status(500).json({mesage:"Internal server error",success:false});
   }
 
-}
+})
 
 
 //Donations Verification
-const updateDonationVerified=async(req,res)=>{
+const updateDonationVerified=catchAsyncError(async(req,res)=>{
   try{
     const {email,url,days,id}=req.body; 
   if (!email|| !url) {
@@ -276,7 +274,7 @@ const updateDonationVerified=async(req,res)=>{
     res.status(500).json({mesage:"Internal server error",success:false});
   }
 }
-
+)
 
 const updateDonationRemoved=async(req,res)=>{
   try{
@@ -306,7 +304,7 @@ const updateDonationRemoved=async(req,res)=>{
 //Jobs Verification
 
 
-const updateJobVerified=async(req,res)=>{
+const updateJobVerified=catchAsyncError(async(req,res)=>{
   try{
     const {id}=req.body; 
 
@@ -332,9 +330,9 @@ const updateJobVerified=async(req,res)=>{
     res.status(500).json({mesage:"Internal server error",success:false});
   }
 }
+)
 
-
-const updateJobRemoved=async(req,res)=>{
+const updateJobRemoved=catchAsyncError(async(req,res)=>{
   try{
     const {id}=req.body;
   if (!id) {
@@ -349,7 +347,7 @@ const updateJobRemoved=async(req,res)=>{
   }catch(err){
     res.status(500).json({mesage:"Internal server error",success:false});
   }
-}
+})
 
 
 

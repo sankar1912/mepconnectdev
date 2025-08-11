@@ -1,8 +1,9 @@
+const catchAsyncError = require("../middlewares/catchAsyncError");
 const fuserModel = require("../models/fuser");
 const user = require("../models/user");
 const sendVerificationEmail = require("../utils/emails/sendVerificationEmail");
 
-const getDetails = async (req, res)=>{
+const getDetails =catchAsyncError( async (req, res)=>{
     const {department, batch} = req.query;
    
     const fusersDoc =await fuserModel.find({department:department, batch:batch}).select("-password")
@@ -19,9 +20,9 @@ const getDetails = async (req, res)=>{
             users:[]
         })
     }
-}
+})
 
-const generateVerificationToken = async (req, res) => {
+const generateVerificationToken = catchAsyncError(async (req, res) => {
   const userDoc = await user.findOne({ email: req.body.email });
   if (userDoc) {
     return res.status(404).json({
@@ -39,9 +40,9 @@ const generateVerificationToken = async (req, res) => {
     await sendVerificationEmail(options);
     res.status(200).json({ message: "Verification email sent." });
   }
-};
+})
 
-const verifyUserToken =async(req, res)=>{
+const verifyUserToken =catchAsyncError(async(req, res)=>{
   const {token} = req.params;
   const fuser = await fuserModel.findOne({verificationToken:token});
   console.log(fuser)
@@ -55,7 +56,7 @@ const verifyUserToken =async(req, res)=>{
     res.status(404).json({message:"Invalid token"});
   }
 }
-
+)
 
 
 module.exports = {getDetails, generateVerificationToken, verifyUserToken}
