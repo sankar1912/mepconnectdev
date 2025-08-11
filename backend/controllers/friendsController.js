@@ -3,8 +3,9 @@ const User = require("../models/user");
 const Group = require("../models/group");
 const friends = require("../models/friends");
 const sendFriendRequestEmail = require("../utils/emails/sendFriendRequestEmail");
+const catchAsyncError = require("../middlewares/catchAsyncError");
 
-const fetchList = async (req, res) => {
+const fetchList = catchAsyncError(async (req, res) => {
     const { email } = req.body;
     try {
         const response = await Friend.findOne({ email })
@@ -33,12 +34,12 @@ const fetchList = async (req, res) => {
             result: []
         });
     }
-};
+})
 
 
 
 
-const addFriend = async (req, res) => {
+const addFriend = catchAsyncError(async (req, res) => {
   const { emailId, friendemailId, note } = req.body;
   try {
     const user = await Friend.findOne({ email: emailId });
@@ -66,9 +67,9 @@ const addFriend = async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Internal server error", success: true });
   }
-};
+})
 
-const acceptFriend = async (req, res) => {
+const acceptFriend = catchAsyncError(async (req, res) => {
   try {
     const { userId, friendId } = req.body;
     if (!userId || !friendId || userId === friendId) {
@@ -113,10 +114,10 @@ const acceptFriend = async (req, res) => {
       success: false,
     });
   }
-};
+})
 
 
-const removeFriend = async (req, res) => {
+const removeFriend =catchAsyncError( async (req, res) => {
   const { userId, friendUserId } = req.body;
 
   try {
@@ -137,8 +138,8 @@ const removeFriend = async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Internal server error" });
   }
-};
-const getMyFriends = async (req, res) => {
+})
+const getMyFriends = catchAsyncError(async (req, res) => {
   const { userId } = req.params;
   try {
     const user = await Friend.findById(userId).populate(
@@ -155,8 +156,8 @@ const getMyFriends = async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Internal server error" });
   }
-};
-const getGroups = async (req, res) => {
+})
+const getGroups = catchAsyncError(async (req, res) => {
   const { userId } = req.params;
 
   try {
@@ -171,9 +172,9 @@ const getGroups = async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Internal server error" });
   }
-};
+})
 
-const getBlockedUsers = async (req, res) => {
+const getBlockedUsers = catchAsyncError(async (req, res) => {
   const { userId } = req.params;
 
   try {
@@ -191,16 +192,16 @@ const getBlockedUsers = async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Internal server error" });
   }
-};
+})
 
-const getusers = async (req, res) => {
+const getusers = catchAsyncError(async (req, res) => {
   try {
     const users = await User.find();
     return res.status(200).json({ friends: users });
   } catch (err) {
     res.status(500).json({ message: "Internal server error" });
   }
-};
+})
 
 module.exports = {
   getMyFriends,

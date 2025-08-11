@@ -1,6 +1,7 @@
+const catchAsyncError = require('../middlewares/catchAsyncError');
 const User= require('../models/user');
 const sendResetPassword = require('../utils/emails/sendResetPassword');
-const forgotpassword=async (req, res) => {
+const forgotpassword=catchAsyncError(async (req, res) => {
     const { email } = req.body;
   
     try {
@@ -20,9 +21,9 @@ const forgotpassword=async (req, res) => {
       console.error('Error in reset password request:', error);
       res.status(500).json({ message: 'Something went wrong. Please try again.' });
     }
-  }
+  })
 
-  const resetpassword=async (req, res) => {
+  const resetpassword=catchAsyncError(async (req, res) => {
     const hashedToken = req.params.token;
     const { password } = req.body;
   
@@ -49,5 +50,5 @@ const forgotpassword=async (req, res) => {
       console.error('Error resetting password:', error);
       res.status(500).json({ message: 'Something went wrong. Please try again.' });
     }
-  }
+  })
   module.exports={resetpassword,forgotpassword}

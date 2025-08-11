@@ -19,7 +19,6 @@ const PersonalDetails = ({ user }) => {
         borderRadius: 5,
         background: 'linear-gradient(to bottom right, #e3f2fd, #ffffff)',
         boxShadow: 3,
-        width:"95%",
         mx: 'auto',
       }}
     >
@@ -51,8 +50,7 @@ const DetailItem = ({ icon, label, value }) => (
     alignItems: 'center',
     p: 2,
     borderRadius: 3,
-    background: 'rgba(255, 255, 255, 0.4)',
-    backdropFilter: 'blur(6px)',
+    background: 'white',
     border: '1px solid rgba(255, 255, 255, 0.3)',
     transition: 'all 0.3s ease',
     '&:hover': {

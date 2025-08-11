@@ -4,8 +4,9 @@ const Post = require("../models/postsfeed");
 const sendEmail = require("../utils/email");
 const user = require("../models/user");
 const postsfeed = require("../models/postsfeed");
+const catchAsyncError = require("../middlewares/catchAsyncError");
 
-const addnewevent = async (req, res) => {
+const addnewevent = catchAsyncError(async (req, res) => {
   try {
     const {
       id,
@@ -83,9 +84,9 @@ const addnewevent = async (req, res) => {
       status: "error",
     });
   }
-};
+})
 
-const getEventsByDepartment = async (req, res) => {
+const getEventsByDepartment = catchAsyncError(async (req, res) => {
   try {
     const { department } = req.params;
     const {page, limit} = req.query;
@@ -130,7 +131,6 @@ const getEventsByDepartment = async (req, res) => {
       events:[]
     });
   }
-};
-
+})
 
 module.exports={getEventsByDepartment, addnewevent}

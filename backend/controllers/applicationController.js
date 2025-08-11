@@ -1,8 +1,9 @@
+const catchAsyncError = require("../middlewares/catchAsyncError");
 const jobApplications = require("../models/jobApplications");
 const jobsfeed = require("../models/jobsfeed");
 const user = require("../models/user");
 
-const addJobApplication = async (req, res) => {
+const addJobApplication = catchAsyncError(async (req, res) => {
   try {
     const {_id}= req.params;
     const {
@@ -57,9 +58,9 @@ const addJobApplication = async (req, res) => {
     console.error("Error saving job application:", error);
     res.status(500).json({ message: "Server error", success:false });
   }
-};
+})
 
-const trackMyJobs = async (req, res) => {
+const trackMyJobs = catchAsyncError(async (req, res) => {
   try {
     const jobs = await jobsfeed.find({ owner: req.user.uid }).populate("applicants").lean(); // not populating applicants here
 
@@ -99,12 +100,10 @@ const trackMyJobs = async (req, res) => {
       success: false
     });
   }
-};
+})
 
 
-
-
-const trackAllJobApplication = async (req, res) => {
+const trackAllJobApplication =catchAsyncError(async (req, res) => {
     try {
       const userId = req.user.uid;
       const userEmail = req.user.email;
@@ -132,7 +131,5 @@ const trackAllJobApplication = async (req, res) => {
         success: false,
       });
     }
-  };
-  
-
+  })
 module.exports = { addJobApplication, trackAllJobApplication, trackMyJobs };

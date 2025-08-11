@@ -165,7 +165,6 @@ export const getPost = ({id}) =>async (dispatch, getState) => {
 
 
 export const addLike = ({_id}) => async(dispatch, getState) => {
-console.log("Post _id:", _id);
 
   const { auth } = getAuth(getState());
   if (!auth || !auth.user) {
@@ -175,12 +174,13 @@ console.log("Post _id:", _id);
 
   
   await axios.post(`/api/v1/feeds/posts/addlike/${_id}`,{email:auth.user.email})
-
+  dispatch(getPost({id:_id}));
   dispatch(getAddLikeSuccess({ id:_id, email:auth.user.email }));
 };
 export const removeLike = ({_id}) => async (dispatch, getState) => {
   const { auth } = getAuth(getState());
   await axios.post(`/api/v1/feeds/posts/removelike/${_id}`,{email:auth.user.email});
+  dispatch(getPost({id:_id}));
   dispatch(removeLikeSuccess({ id:_id, email: auth.user.email }));
 };
 
@@ -190,13 +190,11 @@ export const addComment = (id, text) => (dispatch, getState) => {
   if (!text.trim()) return; 
 
   const newComment = {
-    name: auth.user.name,
-    email: auth.user.email,
+   id:auth?.user?._id,
     text,
-    timestamp: new Date().toISOString(),
   };
-
   dispatch(addCommentSuccess({ id, comment: newComment }));
+  
 };
 
 export const fetchPost = (nextPage=0) => async (dispatch, getState) => {

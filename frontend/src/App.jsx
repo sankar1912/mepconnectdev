@@ -38,6 +38,7 @@ import useShare from "./components/hooks/useShare";
 import TourContainer from "./components/tour/TourContainer";
 import ManageUser from "./components/tour/ManageUser";
 import VerifyUser from "./components/VerifyUser";
+import NotificationBar from "./notification/notificationBar";
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
       {
         start ?(<>
         <Header />
+        <NotificationBar/>
           <div style={{marginTop:'5%'}}>
             
           <Routes>

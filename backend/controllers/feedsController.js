@@ -4,8 +4,9 @@ const Post = require("../models/postsfeed");
 const sendEmail = require("../utils/email");
 const user = require("../models/user");
 const postsfeed = require("../models/postsfeed");
+const catchAsyncError = require("../middlewares/catchAsyncError");
 //events
-const addnewevent = async (req, res) => {
+const addnewevent = catchAsyncError(async (req, res) => {
   try {
     const {
       id,
@@ -83,9 +84,9 @@ const addnewevent = async (req, res) => {
       status: "error",
     });
   }
-};
+})
 
-const getEventsByDepartment = async (req, res) => {
+const getEventsByDepartment = catchAsyncError(async (req, res) => {
   try {
     const { department } = req.params;
 
@@ -119,11 +120,11 @@ const getEventsByDepartment = async (req, res) => {
       events:[]
     });
   }
-};
+})
 
 //posts
 
-const addNewPost = async (req, res) => {
+const addNewPost = catchAsyncError(async (req, res) => {
   try {
     const { name, username, department, time, text, media, hashtags,email } =
       req.body;
@@ -167,9 +168,9 @@ const addNewPost = async (req, res) => {
     console.error("Error saving post:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
-};
+})
 
-const addPostLike = async (req, res) => {
+const addPostLike = catchAsyncError(async (req, res) => {
 
   const { email,timestamp } = req.body;
   const { _id } = req.params;
@@ -204,9 +205,8 @@ const addPostLike = async (req, res) => {
       error: err.message,
     });
   }
-};
-
-const removePostLike = async (req, res) => {
+})
+const removePostLike =catchAsyncError( async (req, res) => {
 
   const { email} = req.body;
   const { _id } = req.params;
@@ -242,9 +242,9 @@ const removePostLike = async (req, res) => {
       error: err.message,
     });
   }
-};
+})
 
-const getPostByName=async(req,res)=>{
+const getPostByName=catchAsyncError(async(req,res)=>{
   try{
     const {_id}=req.params;
     const Post=await postsfeed.find({_id:_id});
@@ -272,9 +272,9 @@ const getPostByName=async(req,res)=>{
       success:false
     })
   }
-}
+})
 
-const getPostsByDepartment = async (req, res) => {
+const getPostsByDepartment =catchAsyncError( async (req, res) => {
   try {
     const { department } = req.params;
     let posts;
@@ -322,11 +322,11 @@ const getPostsByDepartment = async (req, res) => {
       status: "error",
     });
   }
-};
+})
 
 
 //donations
-const addDonation = async (req, res) => {
+const addDonation = catchAsyncError(async (req, res) => {
   try {
     const {
       campaignName,
@@ -371,9 +371,9 @@ const addDonation = async (req, res) => {
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
-};
+})
 
-const getAllDonations = async (req, res) => {
+const getAllDonations = catchAsyncError(async (req, res) => {
   try {
     const donation = await donations.find({verified:true});
     res.status(200).json({ success: true, donations: donation });
@@ -384,9 +384,9 @@ const getAllDonations = async (req, res) => {
       donations: [],
     });
   }
-};
+})
 
-const getSingleDonations = async (req, res) => {
+const getSingleDonations = catchAsyncError(async (req, res) => {
   const { id } = req.params;
   try {
     const donation = await donations.find({ _id: id });
@@ -410,7 +410,7 @@ const getSingleDonations = async (req, res) => {
       donations: [],
     });
   }
-};
+})
 
 module.exports = {
   addnewevent,

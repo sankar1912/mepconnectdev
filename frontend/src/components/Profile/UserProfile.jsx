@@ -39,7 +39,7 @@ function UserProfile() {
 
   const selectedUser = useSelector(searchUser || []);
   const [isEditingProfile, setIsEditingProfile] = useState(false);
-  const [nameText, setNameText] = useState(auth.user?.name || "Guest User");
+  const [nameText, setNameText] = useState(auth?.user?.name || "Guest User");
   const [headlineText, setHeadlineText] = useState(
     user?.headline || "Software Developer | Tech Enthusiast"
   );

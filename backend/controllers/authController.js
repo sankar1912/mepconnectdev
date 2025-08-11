@@ -8,7 +8,8 @@ const EXPIRE_DURATION = process.env.EXPIRE || "7d";
 const Friend = require('../models/friends'); 
 const chats=require('../models/chats');
 const sendToken = require("../utils/jwt");
-exports.loginUser = async (req, res) => {
+const catchAsyncError = require("../middlewares/catchAsyncError");
+exports.loginUser = catchAsyncError(async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email }).select('+password');
@@ -40,11 +41,9 @@ exports.loginUser = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Error logging in", error: error.message });
   }
-};
+})
 
-
-
-exports.logoutUser = async (req, res) => {
+exports.logoutUser = catchAsyncError(async (req, res) => {
     try {
       res.cookie("token", "", {
         httpOnly: true,
@@ -55,13 +54,13 @@ exports.logoutUser = async (req, res) => {
     } catch (error) {
       res.status(500).json({ message: "Error logging out", error: error.message });
     }
-    
-  };
+    }
+  )
 
 
 
 
-  exports.registerUser = async (req, res) => {
+  exports.registerUser = catchAsyncError(async (req, res) => {
     const { name, email, password, batch, degree, department, place, profileImage, phone, dob, father, mother, education=[], experience=[] } = req.body;
   
     try {
@@ -130,10 +129,10 @@ exports.logoutUser = async (req, res) => {
       console.error(error);
       res.status(500).json({ message: "Error registering user", error: error.message });
     }
-  };
+  })
 
 //Load user
-exports.loadUser = async (req, res) => {
+exports.loadUser = catchAsyncError(async (req, res) => {
 
     try {
       const {token} = req.cookies;
@@ -153,5 +152,4 @@ exports.loadUser = async (req, res) => {
       }
       res.status(500).json({ message: "Error loading user", error: error.message });
     }
-  };
-
+  })

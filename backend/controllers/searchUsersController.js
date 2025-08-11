@@ -3,7 +3,8 @@ const Post = require("../models/postsfeed");
 const Event = require("../models/eventsfeed");
 const Donation = require("../models/donations");
 const Friends = require("../models/friends");
-const searchUser = async (req, res) => {
+const catchAsyncError = require("../middlewares/catchAsyncError");
+const searchUser =catchAsyncError( async (req, res) => {
   try {
     const { place, batch, dept, name, company } = req.query;
     const { page = 1, limit = 10 } = req.query;
@@ -54,9 +55,9 @@ const searchUser = async (req, res) => {
     console.error("Error in searchUser:", error);
     res.status(500).json({ message: "Internal server error" });
   }
-};
+})
 
-const searchUserById = async (req, res) => {
+const searchUserById = catchAsyncError(async (req, res) => {
   const { _id } = req.params;
   const { email } = req.body;
   try {
@@ -145,6 +146,6 @@ const searchUserById = async (req, res) => {
       donations: [],
     });
   }
-};
+})
 
 module.exports = { searchUser, searchUserById };

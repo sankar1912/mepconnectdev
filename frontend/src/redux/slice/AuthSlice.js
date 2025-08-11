@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { setMessage } from "./notificationSlice";
 
 
 
@@ -68,11 +69,13 @@ export const logOutRequest=()=>async(dispatch)=>{
 
 export const loadUserRequest = () => async (dispatch) => {
   dispatch(setLoading());
+  
   try {
+    
     const response = await axios.get("/api/v1/loaduser", { withCredentials: true });
-
     dispatch(setUser(response.data.user));
-    dispatch(setStatusIdle());
+    console.log("Sending message")
+    dispatch(setMessage("Welcome, back!!"));
   } catch (error) {
     dispatch(setError(error.response?.data?.message || error.message));
   }

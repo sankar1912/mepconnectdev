@@ -1,7 +1,8 @@
+const catchAsyncError = require("../middlewares/catchAsyncError");
 const Jobs = require("../models/jobsfeed");
 const user = require("../models/user");
 
-const registerJob = async(req, res)=>{
+const registerJob = catchAsyncError(async(req, res)=>{
     const {
     title,
     description,
@@ -55,10 +56,10 @@ const registerJob = async(req, res)=>{
         })
     }
 
-}
+})
 
 
-const searchJobById = async(req, res)=>{
+const searchJobById = catchAsyncError(async(req, res)=>{
     const {_id} = req.params;
     try{
         let job = await Jobs.findById(_id);
@@ -82,9 +83,9 @@ const searchJobById = async(req, res)=>{
             job:{}
         })
     }
-}
+})
 
-const searchJobByUser= async(req, res)=>{
+const searchJobByUser= catchAsyncError(async(req, res)=>{
     const {_id} = req.params;
     if(_id==="all"){
         let job = await Jobs.find().populate("owner", "name email profileImage batch department degree place verified");
@@ -127,7 +128,7 @@ const searchJobByUser= async(req, res)=>{
             jobs:{}
         })
     }
-}
+})
 
 
 // const searchJobByField = async (req, res) => {
@@ -169,7 +170,7 @@ const searchJobByUser= async(req, res)=>{
 //   };
 
 
-const searchJobByField = async (req, res) => {
+const searchJobByField = catchAsyncError(async (req, res) => {
     try {
       const { name, job, places, mode, experienceLevels,type } = req.query;
       const placeArr = places ? places.split(":") : [];
@@ -203,6 +204,5 @@ const searchJobByField = async (req, res) => {
       console.error("Search error:", error);
       res.status(500).json({ message: "Server error while searching for jobs." });
     }
-  };
-
+  })
 module.exports={registerJob, searchJobById, searchJobByUser, searchJobByField}
